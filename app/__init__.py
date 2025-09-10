@@ -17,13 +17,13 @@ def create_app():
                 static_folder='static',
                 static_url_path='/static')
 
-    # Configuração para servir arquivos estáticos adequadamente
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 ano de cache
+    # Configuração para servir arquivos estáticos sem cache (para desenvolvimento)
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Sem cache
 
     # Inicializar bucket de imagens
     try:
         from .database import criar_bucket_se_nao_existir
-        criar_bucket_se_nao_existir()
+        criar_bucket_se_nao_existir("imagens_melhoradas_tech")
     except Exception as e:
         print(f"Aviso: Não foi possível inicializar bucket: {e}")
 

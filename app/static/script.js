@@ -1599,7 +1599,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (paginacaoImagens) paginacaoImagens.style.display = 'none';
     
     try {
-      const bucket = bucketSelect ? bucketSelect.value : 'imagens-produtos';
+      const bucket = bucketSelect ? bucketSelect.value : 'imagens_melhoradas_tech';
       const search = searchImagens ? searchImagens.value.trim() : '';
       
       const params = new URLSearchParams({
@@ -1610,8 +1610,10 @@ document.addEventListener("DOMContentLoaded", function () {
         offset: ((paginaAtual - 1) * imagensPorPagina).toString()
       });
       
+      console.log(`DEBUG: Fazendo request para: /storage/imagens?${params}`);
       const response = await fetch(`/storage/imagens?${params}`);
       const data = await response.json();
+      console.log('DEBUG: Response data:', data);
       
       loadingImagens.style.display = 'none';
       

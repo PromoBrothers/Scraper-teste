@@ -496,3 +496,130 @@
 2025-09-10 00:03:48,995 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:03:48] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
 2025-09-10 00:03:50,396 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/2 200 OK"
 2025-09-10 00:03:50,398 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:03:50] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:06:45,835 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:06:45,835 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:07:03,443 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:07:03,445 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:07:03] "GET /storage/imagens HTTP/1.1" 200 -
+2025-09-10 00:07:30,540 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:07:30,542 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:07:30] "GET /storage/imagens?limite=3 HTTP/1.1" 200 -
+2025-09-10 00:07:35,985 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:07:35,987 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:07:35] "GET /storage/imagens?limite=3 HTTP/1.1" 200 -
+2025-09-10 00:08:57,069 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:08:57,069 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:08:59,841 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:08:59] "GET / HTTP/1.1" 200 -
+2025-09-10 00:09:01,961 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:09:01,964 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:09:01] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:09:03,080 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:09:03,120 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:09:03] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:09:04,062 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:09:04,066 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:09:04] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:09:47,151 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:09:47] "GET / HTTP/1.1" 200 -
+2025-09-10 00:09:50,135 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:09:50,138 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:09:50] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:09:50,858 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:09:50,861 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:09:50] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:09:51,966 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:09:51,970 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:09:51] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:09:57,051 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:09:57,052 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:09:57] "GET /storage/imagens?bucket=imagens_melhoradas_tech&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:10:58,161 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:10:58,162 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:11:07,223 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:11:07,225 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:07] "GET /storage/imagens?bucket=imagens_melhoradas_tech&limite=3&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:11:08,174 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:11:08,176 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:11:08] "GET /storage/imagens?bucket=imagens_melhoradas_tech&limite=3&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:11:34,333 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:11:34,334 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:11:38,216 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:11:38] "GET / HTTP/1.1" 200 -
+2025-09-10 00:11:39,494 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:11:39,497 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:11:39] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:11:40,228 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:11:40,270 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:11:40] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:11:41,228 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:11:41,232 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:11:41] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:11:54,389 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:54] "GET / HTTP/1.1" 200 -
+2025-09-10 00:11:55,631 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:11:55,638 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:55] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:11:56,825 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:11:56,831 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:56] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:11:57,673 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:11:57,677 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:57] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:11:59,447 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:11:59,448 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:11:59] "GET /storage/imagens?bucket=imagens_melhoradas_tech&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:13:03,927 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:13:03,929 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:13:03] "GET /storage/imagens?bucket=imagens_melhoradas_tech&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:13:52,711 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:13:52,712 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:13:54,839 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:13:54] "GET / HTTP/1.1" 200 -
+2025-09-10 00:13:55,982 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:13:55,985 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:13:55] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:13:56,890 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:13:56,894 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:13:56] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:13:57,714 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:13:57,718 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:13:57] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:15:40,721 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:15:40] "GET / HTTP/1.1" 200 -
+2025-09-10 00:15:41,785 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:15:41,789 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:15:41] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:15:42,698 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:15:42,701 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:15:42] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:15:43,523 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:15:43,528 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:15:43] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:16:14,593 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:16:14,593 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:16:19,515 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:16:19] "GET / HTTP/1.1" 200 -
+2025-09-10 00:16:20,640 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:16:20,643 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:16:20] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:16:23,768 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:16:23,770 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:16:23] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:16:25,369 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:16:25,372 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:16:25] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:18:02,659 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:02] "GET / HTTP/1.1" 200 -
+2025-09-10 00:18:06,173 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:18:06,176 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:06] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:18:07,174 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:18:07,176 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:07] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:18:08,046 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:18:08,052 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:08] "GET /produtos/260 HTTP/1.1" 200 -
+2025-09-10 00:18:09,775 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:18:09,780 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:09] "GET /storage/imagens?bucket=imagens_melhoradas_tech&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:18:12,923 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens-produtos "HTTP/2 200 OK"
+2025-09-10 00:18:12,930 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:12] "GET /storage/imagens?bucket=imagens-produtos&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:18:14,667 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhorada "HTTP/2 200 OK"
+2025-09-10 00:18:14,669 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:14] "GET /storage/imagens?bucket=imagens_melhorada&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:18:16,667 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/list/imagens_melhoradas_tech "HTTP/2 200 OK"
+2025-09-10 00:18:16,668 - werkzeug - INFO - 127.0.0.1 - - [10/Sep/2025 00:18:16] "GET /storage/imagens?bucket=imagens_melhoradas_tech&pasta=&search=&limite=20&offset=0 HTTP/1.1" 200 -
+2025-09-10 00:22:18,494 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:22:18,494 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:23:01,066 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-10 00:23:01,067 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-10 00:23:08,152 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:23:08] "GET / HTTP/1.1" 200 -
+2025-09-10 00:23:09,808 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-10 00:23:09,812 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:23:09] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:23:11,443 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-10 00:23:11,488 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:23:11] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-10 00:23:12,203 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes?select=%2A&id=eq.260 "HTTP/2 200 OK"
+2025-09-10 00:23:12,207 - werkzeug - INFO - 192.168.0.191 - - [10/Sep/2025 00:23:12] "GET /produtos/260 HTTP/1.1" 200 -

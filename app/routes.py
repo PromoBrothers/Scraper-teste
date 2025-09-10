@@ -557,7 +557,7 @@ def enviar_produto_agendado(produto_id):
 @main_bp.route('/storage/imagens', methods=['GET'])
 def listar_imagens():
     try:
-        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens-produtos'))
+        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens_melhoradas_tech'))
         pasta = request.args.get('pasta', '')
         search_term = request.args.get('search', '')
         limite = int(request.args.get('limite', 20))
@@ -585,7 +585,7 @@ def listar_imagens():
 @main_bp.route('/storage/pastas', methods=['GET'])
 def listar_pastas():
     try:
-        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens-produtos'))
+        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens_melhoradas_tech'))
         pasta_pai = request.args.get('pasta_pai', '')
         
         pastas = database.listar_pastas_bucket(
