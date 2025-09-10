@@ -1,0 +1,325 @@
+2025-09-09 15:29:05,217 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:29:05,218 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:29:41,093 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:29:41,093 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:29:52,712 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:52] "GET / HTTP/1.1" 200 -
+2025-09-09 15:29:52,835 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:52] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:29:52,836 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:52] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:29:54,740 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:54] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 15:29:54,776 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:54] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:29:54,777 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:29:54] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:33:32,480 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 15:33:37,505 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_705ce17a-6b6c-41c3-86c7-05f43f8414af.jpg "HTTP/1.1 200 OK"
+2025-09-09 15:33:39,202 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:33:39] "[35m[1mPOST /webhook/processar HTTP/1.1[0m" 500 -
+2025-09-09 15:33:39,220 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:33:39] "[33mGET /error HTTP/1.1[0m" 404 -
+2025-09-09 15:38:21,631 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:38:21,632 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:38:22,987 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:22] "GET / HTTP/1.1" 200 -
+2025-09-09 15:38:23,114 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:23] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:38:23,118 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:23] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:38:30,808 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:30] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 15:38:30,845 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:30] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:38:30,846 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:30] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:38:42,080 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 15:38:46,444 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_f51d5008-d089-4cef-9da5-b3cba0fc47f0.jpg "HTTP/1.1 200 OK"
+2025-09-09 15:38:48,272 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:48] "[35m[1mPOST /webhook/processar HTTP/1.1[0m" 500 -
+2025-09-09 15:38:48,286 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:38:48] "[33mGET /error HTTP/1.1[0m" 404 -
+2025-09-09 15:40:30,647 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:40:30,647 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:40:34,603 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:34] "GET / HTTP/1.1" 200 -
+2025-09-09 15:40:34,711 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:34] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:40:34,716 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:34] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:40:38,741 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:38] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 15:40:38,786 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:38] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:40:38,786 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:38] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:40:46,808 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 15:40:54,367 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_82383929-eca6-4d22-9858-f3cc661d09a6.jpg "HTTP/1.1 200 OK"
+2025-09-09 15:40:56,368 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:56] "[35m[1mPOST /webhook/processar HTTP/1.1[0m" 500 -
+2025-09-09 15:40:56,377 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:40:56] "[33mGET /error HTTP/1.1[0m" 404 -
+2025-09-09 15:43:18,737 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:43:18,737 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:43:20,570 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:20] "GET / HTTP/1.1" 200 -
+2025-09-09 15:43:20,641 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:20] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:43:20,715 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:20] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:43:29,615 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:29] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 15:43:29,663 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:29] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:43:29,664 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:29] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:43:37,220 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 15:43:51,766 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_915ef34e-1c1d-4484-abc3-539492b44729.jpg "HTTP/1.1 200 OK"
+2025-09-09 15:43:53,176 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:53] "[35m[1mPOST /webhook/processar HTTP/1.1[0m" 500 -
+2025-09-09 15:43:53,189 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:43:53] "[33mGET /error HTTP/1.1[0m" 404 -
+2025-09-09 15:48:28,193 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:48:28,193 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:48:41,499 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 15:48:41,499 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 15:48:42,997 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:42] "GET / HTTP/1.1" 200 -
+2025-09-09 15:48:43,067 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:43] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:48:43,114 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:43] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:48:46,064 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:46] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 15:48:46,120 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:46] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 15:48:46,123 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:46] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 15:48:47,813 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 15:48:47,867 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:47] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 15:48:49,319 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 15:48:49,319 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:48:49] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 15:49:10,509 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 15:49:21,420 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_3e80e85a-632c-4f44-9834-d5ee82e03011.jpg "HTTP/1.1 200 OK"
+2025-09-09 15:49:23,724 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:49:23] "[35m[1mPOST /webhook/processar HTTP/1.1[0m" 500 -
+2025-09-09 15:49:23,733 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 15:49:23] "[33mGET /error HTTP/1.1[0m" 404 -
+2025-09-09 16:13:38,250 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 16:13:38,251 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 16:13:41,572 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:41] "GET / HTTP/1.1" 200 -
+2025-09-09 16:13:41,697 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:41] "GET /static/style.css HTTP/1.1" 200 -
+2025-09-09 16:13:41,730 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:41] "GET /static/script.js HTTP/1.1" 200 -
+2025-09-09 16:13:51,896 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:51] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 16:13:51,926 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:51] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 16:13:51,927 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:13:51] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 16:14:00,746 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Salon-Line-Shampoo-Condicionador-Crescimento/dp/B0F1BLZ633?ref=dlx_appda_dg_dcl_B0F1BLZ633_dt_sl7_55_pi&pf_rd_r=XAKVNJ9E157W6PHKZXMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 16:14:06,524 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_6db049e8-544a-44c6-99d3-8d1d1fde8988.jpg "HTTP/1.1 200 OK"
+2025-09-09 16:14:08,228 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/1.1 201 Created"
+2025-09-09 16:14:08,238 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:08] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 16:14:20,071 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:14:20,185 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:20] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:14:22,626 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:14:22,629 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:22] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:14:25,715 - httpx - INFO - HTTP Request: DELETE https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.341 "HTTP/1.1 200 OK"
+2025-09-09 16:14:25,716 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:25] "DELETE /produtos/341 HTTP/1.1" 200 -
+2025-09-09 16:14:55,514 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:55] "GET / HTTP/1.1" 200 -
+2025-09-09 16:14:55,538 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:55] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 16:14:55,540 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:14:55] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 16:15:08,879 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:15:08] "POST /produto HTTP/1.1" 200 -
+2025-09-09 16:15:09,706 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_4afaea2c-c154-488a-91bb-83f72fb06886.jpg "HTTP/1.1 200 OK"
+2025-09-09 16:15:11,089 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/1.1 201 Created"
+2025-09-09 16:15:11,092 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:15:11] "POST /webhook HTTP/1.1" 200 -
+2025-09-09 16:16:30,568 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:16:30,570 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:16:30] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:16:34,604 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:16:34,606 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:16:34] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:16:36,347 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:16:36,348 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:16:36] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:16:37,607 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.343 "HTTP/1.1 200 OK"
+2025-09-09 16:16:37,612 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:16:37] "GET /produtos/343 HTTP/1.1" 200 -
+2025-09-09 16:16:47,819 - httpx - INFO - HTTP Request: DELETE https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.343 "HTTP/1.1 200 OK"
+2025-09-09 16:16:47,821 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:16:47] "DELETE /produtos/343 HTTP/1.1" 200 -
+2025-09-09 16:23:12,512 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:12,514 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:12] "GET /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:19,673 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:19,675 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:19] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:21,553 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:21,556 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:21] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:21,898 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:21,900 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:21] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:22,098 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:22,099 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:22] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:22,281 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:22,284 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:22] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:22,519 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:22,520 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:22] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:22,715 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:22,716 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:22] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:24,872 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:24,873 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:24] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:25,086 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:25,088 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:25] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:25,282 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:25,284 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:25] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:25,518 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:25,519 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:25] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:23:25,736 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:23:25,738 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:23:25] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:07,485 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:07] "GET / HTTP/1.1" 200 -
+2025-09-09 16:28:07,511 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 16:28:07,512 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:07] "GET /static/script.js HTTP/1.1" 200 -
+2025-09-09 16:28:09,672 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:09] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 16:28:09,713 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:09] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 16:28:09,715 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:09] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 16:28:11,751 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:28:11,758 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:11] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:28:13,444 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:28:13,445 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:13] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:28:14,509 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:14,511 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:14] "GET /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:21,515 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:21,516 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:21] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:21,603 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:28:21,604 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:21] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:28:40,343 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:40,345 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:40] "GET /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:43,665 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:43,667 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:43] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:43,730 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:28:43,731 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:43] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:28:45,200 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:45,201 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:45] "GET /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:51,390 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:28:51,392 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:51] "PUT /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:28:51,467 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:28:51,468 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:28:51] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:29:05,707 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:29:05,708 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:05] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:29:26,841 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:29:26,843 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:26] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:29:28,305 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:29:28,306 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:28] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:29:49,043 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:29:49,044 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:49] "POST /agendar_produto/342 HTTP/1.1" 200 -
+2025-09-09 16:29:49,119 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 16:29:49,121 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:49] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:29:52,063 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 16:29:52,065 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:29:52] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 16:30:47,721 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.342 "HTTP/1.1 200 OK"
+2025-09-09 16:30:47,724 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:30:47] "GET /produtos/342 HTTP/1.1" 200 -
+2025-09-09 16:33:12,903 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:33:12] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 16:33:12,929 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:33:12] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 16:33:12,930 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 16:33:12] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 17:58:28,938 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.15.6:80
+2025-09-09 17:58:28,940 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 17:58:35,522 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:35] "GET / HTTP/1.1" 200 -
+2025-09-09 17:58:35,592 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:35] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 17:58:35,637 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:35] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 17:58:39,030 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:39] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 17:58:39,079 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:39] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+2025-09-09 17:58:39,080 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:39] "[36mGET /static/script.js HTTP/1.1[0m" 304 -
+2025-09-09 17:58:40,041 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 17:58:40,146 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:40] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 17:58:49,325 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 17:58:49,328 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:49] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 17:58:50,388 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 17:58:50,389 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 17:58:50] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 18:31:24,149 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/Hidratante-Antiatrito-75g-Niacinamida-Alanto%C3%ADna/dp/B0BLT2VT1B/ref=pd_dp_d_dp_dealz_etdr_d_sccl_1_2/144-5078894-3727120?pd_rd_w=zia4K&content-id=amzn1.sym.0c225ccc-ba61-4ed7-8ec2-00a23aa4a681&pf_rd_p=0c225ccc-ba61-4ed7-8ec2-00a23aa4a681&pf_rd_r=BXMDCY5SVBVR2DK0YKCQ&pd_rd_wg=R4LRU&pd_rd_r=2615866c-146f-4b9c-ade7-09fe4d7a6cdb&pd_rd_i=B0BLT2VT1B&psc=1 via ScraperAPI...
+2025-09-09 18:31:42,394 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_11cd2267-7bec-4b74-b542-3a64fbc57906.jpg "HTTP/1.1 200 OK"
+2025-09-09 18:31:43,914 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/1.1 201 Created"
+2025-09-09 18:31:43,917 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:31:43] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 18:31:59,015 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 18:31:59,017 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:31:59] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 18:34:07,602 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.344 "HTTP/1.1 200 OK"
+2025-09-09 18:34:07,605 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:34:07] "GET /produtos/344 HTTP/1.1" 200 -
+2025-09-09 18:34:10,074 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.344 "HTTP/1.1 200 OK"
+2025-09-09 18:34:10,075 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:34:10] "PUT /produtos/344 HTTP/1.1" 200 -
+2025-09-09 18:34:10,172 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 18:34:10,173 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:34:10] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 18:34:36,293 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/1.1 200 OK"
+2025-09-09 18:34:36,302 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:34:36] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 18:35:24,488 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 18:35:24,489 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:35:24] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 18:35:42,161 - httpx - INFO - HTTP Request: PATCH https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.344 "HTTP/1.1 200 OK"
+2025-09-09 18:35:42,164 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:35:42] "POST /agendar_produto/344 HTTP/1.1" 200 -
+2025-09-09 18:35:42,277 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=is.null&order=created_at.desc "HTTP/1.1 200 OK"
+2025-09-09 18:35:42,278 - werkzeug - INFO - 127.0.0.1 - - [09/Sep/2025 18:35:42] "GET /produtos?status=nao-agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:43:10,918 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-09 22:43:10,918 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 22:43:16,047 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:43:16] "GET / HTTP/1.1" 200 -
+2025-09-09 22:43:16,166 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:43:16] "GET /static/style.css HTTP/1.1" 200 -
+2025-09-09 22:43:16,169 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:43:16] "GET /static/script.js HTTP/1.1" 200 -
+2025-09-09 22:43:17,233 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:43:17] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 22:44:01,067 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:44:01] "[31m[1mPOST /webhook/processar HTTP/1.1[0m" 400 -
+2025-09-09 22:44:10,486 - app.anti_bot - INFO - Fazendo requisição para https://amzn.to/3I479hY via ScraperAPI...
+2025-09-09 22:44:44,985 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:44:44] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 22:44:50,418 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-09 22:44:50,421 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:44:50] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:44:50,982 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:44:50,998 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_127b7278-dbd1-4c0e-bd37-63e679f62831.jpg "HTTP/2 200 OK"
+2025-09-09 22:44:53,076 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:44:53] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:44:53,297 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/2 201 Created"
+2025-09-09 22:44:53,304 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:44:53] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 22:45:05,706 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/BIO-SOFT-Lisa-Esfoliante-Morango/dp/B0D31XH3MT?ref=dlx_appda_dg_dcl_B0D31XH3MT_dt_sl7_55_pi&pf_rd_r=0WK15CCDQ5XQTD12EZMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 22:45:17,435 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_28f328a5-02f8-4e67-b863-845961978c3a.jpg "HTTP/2 200 OK"
+2025-09-09 22:45:18,646 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/2 201 Created"
+2025-09-09 22:45:18,651 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:45:18] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 22:46:47,675 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-09 22:46:47,676 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 22:47:02,542 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/BIO-SOFT-Lisa-Esfoliante-Morango/dp/B0D31XH3MT?ref=dlx_appda_dg_dcl_B0D31XH3MT_dt_sl7_55_pi&pf_rd_r=0WK15CCDQ5XQTD12EZMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 22:47:10,183 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:47:11,028 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:47:11] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:47:16,036 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_33e49741-3c2b-48ab-81de-8ff711b2a6f7.jpg "HTTP/2 200 OK"
+2025-09-09 22:47:16,362 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:47:16,368 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:47:16] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:47:17,959 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/2 201 Created"
+2025-09-09 22:47:17,964 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:47:17] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 22:49:03,201 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.346 "HTTP/2 200 OK"
+2025-09-09 22:49:03,205 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:03] "GET /produtos/346 HTTP/1.1" 200 -
+2025-09-09 22:49:09,768 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.345 "HTTP/2 200 OK"
+2025-09-09 22:49:09,774 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:09] "GET /produtos/345 HTTP/1.1" 200 -
+2025-09-09 22:49:12,279 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.347 "HTTP/2 200 OK"
+2025-09-09 22:49:12,282 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:12] "GET /produtos/347 HTTP/1.1" 200 -
+2025-09-09 22:49:14,547 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:14] "GET / HTTP/1.1" 200 -
+2025-09-09 22:49:15,254 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-09 22:49:15,256 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:15] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:49:16,642 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:49:16,645 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:16] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:49:17,796 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.348 "HTTP/2 200 OK"
+2025-09-09 22:49:17,800 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:17] "GET /produtos/348 HTTP/1.1" 200 -
+2025-09-09 22:49:20,298 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:20] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 22:49:22,409 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-09 22:49:22,412 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:22] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:49:23,435 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:49:23,440 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:23] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:49:24,466 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.348 "HTTP/2 200 OK"
+2025-09-09 22:49:24,469 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:24] "GET /produtos/348 HTTP/1.1" 200 -
+2025-09-09 22:49:34,570 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.348 "HTTP/2 200 OK"
+2025-09-09 22:49:34,572 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:34] "GET /produtos/348 HTTP/1.1" 200 -
+2025-09-09 22:49:34,878 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.348 "HTTP/2 200 OK"
+2025-09-09 22:49:34,880 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:34] "GET /produtos/348 HTTP/1.1" 200 -
+2025-09-09 22:49:37,880 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.347 "HTTP/2 200 OK"
+2025-09-09 22:49:37,885 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:37] "GET /produtos/347 HTTP/1.1" 200 -
+2025-09-09 22:49:41,188 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.346 "HTTP/2 200 OK"
+2025-09-09 22:49:41,191 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:41] "GET /produtos/346 HTTP/1.1" 200 -
+2025-09-09 22:49:44,695 - httpx - INFO - HTTP Request: DELETE https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.348 "HTTP/2 200 OK"
+2025-09-09 22:49:44,700 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:44] "DELETE /produtos/348 HTTP/1.1" 200 -
+2025-09-09 22:49:46,733 - httpx - INFO - HTTP Request: DELETE https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.347 "HTTP/2 200 OK"
+2025-09-09 22:49:46,737 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:46] "DELETE /produtos/347 HTTP/1.1" 200 -
+2025-09-09 22:49:48,971 - httpx - INFO - HTTP Request: DELETE https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?id=eq.346 "HTTP/2 200 OK"
+2025-09-09 22:49:48,973 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:49:48] "DELETE /produtos/346 HTTP/1.1" 200 -
+2025-09-09 22:51:15,687 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://192.168.0.191:80
+2025-09-09 22:51:15,687 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 22:51:17,421 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:51:17] "GET /amazon HTTP/1.1" 200 -
+2025-09-09 22:51:29,479 - app.anti_bot - INFO - Fazendo requisição para https://www.amazon.com.br/BIO-SOFT-Lisa-Esfoliante-Morango/dp/B0D31XH3MT?ref=dlx_appda_dg_dcl_B0D31XH3MT_dt_sl7_55_pi&pf_rd_r=0WK15CCDQ5XQTD12EZMB&pf_rd_p=e3a054cf-5570-4f1a-a17f-8274f8f21855 via ScraperAPI...
+2025-09-09 22:51:40,357 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//storage/v1/object/imagens-produtos/processed_15e57666-09ea-4adb-acf4-0453c4db9cac.jpg "HTTP/2 200 OK"
+2025-09-09 22:51:43,102 - httpx - INFO - HTTP Request: POST https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty "HTTP/2 201 Created"
+2025-09-09 22:51:43,134 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:51:43] "POST /webhook/processar HTTP/1.1" 200 -
+2025-09-09 22:52:03,964 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&agendamento=not.is.null&order=agendamento.desc "HTTP/2 200 OK"
+2025-09-09 22:52:03,967 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:52:03] "GET /produtos?status=agendado&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:52:04,816 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&order=created_at.desc "HTTP/2 200 OK"
+2025-09-09 22:52:04,850 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:52:04] "GET /produtos?status=todos&ordem=desc HTTP/1.1" 200 -
+2025-09-09 22:52:06,128 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.349 "HTTP/2 200 OK"
+2025-09-09 22:52:06,131 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:52:06] "GET /produtos/349 HTTP/1.1" 200 -
+2025-09-09 22:52:32,265 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.345 "HTTP/2 200 OK"
+2025-09-09 22:52:32,285 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:52:32] "GET /produtos/345 HTTP/1.1" 200 -
+2025-09-09 22:52:32,354 - httpx - INFO - HTTP Request: GET https://cfacybymuscwcpgmbjkz.supabase.co//rest/v1/promocoes_beauty?select=%2A&id=eq.345 "HTTP/2 200 OK"
+2025-09-09 22:52:32,356 - werkzeug - INFO - 192.168.0.191 - - [09/Sep/2025 22:52:32] "GET /produtos/345 HTTP/1.1" 200 -

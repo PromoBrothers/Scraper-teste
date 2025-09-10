@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amazon Scraper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" title="Alternar modo escuro">🌙</button>
+
+    <div class="container">
+      <header class="header">
+        <h1>📦 Amazon Scraper</h1>
+        <p>Encontre os melhores produtos da Amazon</p>
+        <nav class="nav-links" style="margin-top: 15px;">
+          <a href="/">Mercado Livre</a>
+          <a href="/amazon" class="active">Amazon</a>
+          <a href="/afiliados">Afiliados</a>
+        </nav>
+      </header>
+
+      <main class="main-content" style="padding: 40px;">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showTab('busca', this)">🔍 Buscar Produtos</button>
+          <button class="tab-btn" onclick="showTab('link', this)">🔗 Analisar Link</button>
+          <button class="tab-btn" onclick="showTab('webhook', this)">📢 Enviar Webhook</button>
+          <button class="tab-btn" onclick="showTab('agendamento', this)">📅 Agendamento</button>
+        </div>
+
+        <div id="tab-busca" class="tab-content active">
+          <form class="search-form" id="amazonSearchForm">
+            <div class="form-group">
+              <label for="amazonProduto">Produto</label>
+              <input type="text" id="amazonProduto" name="amazonProduto" placeholder="Ex: iphone 15 pro max" required />
+            </div>
+            <button type="submit" class="btn" id="amazonSearchBtn">Buscar Produtos</button>
+          </form>
+        </div>
+
+        <div id="tab-link" class="tab-content">
+          <form class="search-form" id="amazonLinkForm">
+            <div class="form-group">
+              <label for="amazonProdutoUrlSingle">Link do Produto (Amazon)</label>
+              <input type="url" id="amazonProdutoUrlSingle" name="amazonProdutoUrl" placeholder="https://www.amazon.com.br/..." required />
+            </div>
+            <button type="submit" class="btn" id="amazonLinkBtn">Analisar Produto</button>
+          </form>
+        </div>
+
+        <div id="tab-webhook" class="tab-content">
+          <div class="webhook-container">
+            <div class="add-product-card">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="amazonProductUrlQueue">🔗 Link do Produto</label>
+                  <input type="url" id="amazonProductUrlQueue" placeholder="https://www.amazon.com.br/..."/>
+                </div>
+                <div class="form-group">
+                  <label for="amazonAffiliateUrlQueue">💰 Link de Afiliado (opcional)</label>
+                  <input type="url" id="amazonAffiliateUrlQueue" placeholder="https://link.afiliado..."/>
+                </div>
+              </div>
+              <button type="button" class="btn add-product-btn" id="amazonAddProductBtn">➕ Adicionar Produto</button>
+            </div>
+            <div class="products-queue" id="amazonProductsQueue">
+              <div class="queue-header">
+                <h4>🎯 Produtos na Fila <span id="amazonQueueCount" class="queue-count">(0)</span></h4>
+                <button type="button" class="btn-secondary clear-queue-btn" id="amazonClearQueueBtn">🗑️ Limpar Fila</button>
+              </div>
+              <div class="queue-list" id="amazonQueueList"></div>
+            </div>
+            <div class="webhook-actions">
+              <form id="amazonWebhookForm">
+                <button type="submit" class="btn-primary process-webhook-btn" id="amazonWebhookBtn">
+                  <span class="btn-icon">🚀</span>
+                  <span class="btn-text">Processar Fila</span>
+                  <span class="btn-badge" id="amazonProcessCount">0</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-agendamento" class="tab-content">
+            <div class="search-section">
+              <form class="search-form" id="filtroAgendamentoForm">
+                <div class="form-group">
+                  <label for="filtroStatus">Status</label>
+                  <select id="filtroStatus" name="status">
+                    <option value="agendado">Agendado</option>
+                    <option value="nao-agendado">Não Agendado</option>
+                    <option value="todos">Todos</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="filtroOrdem">Ordenar por</label>
+                  <select id="filtroOrdem" name="ordem">
+                    <option value="desc">Mais Recentes</option>
+                    <option value="asc">Mais Antigos</option>
+                  </select>
+                </div>
+              </form>
+              <div id="agendamento-list-container">
+                <h3>Produtos na Base de Dados (Visão Unificada):</h3>
+                <div id="agendamento-list" class="products-grid">
+                  <p>Carregando produtos...</p>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processando...</p>
+        </div>
+        
+        <div class="results-section" id="webhookMessageSection" style="display: none">
+            <div class="results-header">
+              <div class="results-count">Resposta do Webhook</div>
+              <button class="clear-btn" id="clearWebhookBtn">Limpar</button>
+            </div>
+            <div id="webhookMessageContent"></div>
+        </div>
+      </main>
+    </div>
+
+    <div id="agendamentoModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Agendar Envio</h2>
+            <span class="close" onclick="closeModal()">&times;</span>
+          </div>
+          <div class="modal-body">
+            <form id="agendamentoForm">
+              <input type="hidden" id="agendarProdutoId" />
+              <div class="form-group">
+                <label for="agendarData">Data</label>
+                <input type="date" id="agendarData" required />
+              </div>
+              <div class="form-group">
+                <label for="agendarHora">Hora</label>
+                <input type="time" id="agendarHora" required />
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn">Salvar Agendamento</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+  
+    <div id="editarModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Produto Amazon</h2>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="editarForm">
+                    <input type="hidden" id="editarProdutoId" />
+                    <div class="form-group">
+                        <label for="editarImagemUrl">Link da Imagem</label>
+                        <input 
+                            type="url" 
+                            id="editarImagemUrl" 
+                            placeholder="https://exemplo.com/imagem.jpg" 
+                            oninput="updateImagePreview()"
+                            style="
+                                width: 100%;
+                                padding: 12px;
+                                border: 1px solid #ddd;
+                                border-radius: 8px;
+                                font-size: 14px;
+                            "
+                        />
+                        <small style="color: #666; margin-top: 5px; display: block;">
+                            Cole aqui o novo link da imagem do produto
+                        </small>
+                        
+                        <div id="imagePreviewContainer" style="margin-top: 15px; text-align: center;">
+                            <div id="imagePreviewLabel" style="font-weight: 500; margin-bottom: 8px; color: #333;">
+                                Preview da Imagem:
+                            </div>
+                            <div id="imagePreviewWrapper" style="
+                                border: 2px dashed #ddd;
+                                border-radius: 10px;
+                                padding: 20px;
+                                background-color: #fafafa;
+                                min-height: 200px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            ">
+                                <img id="imagePreview" style="
+                                    max-width: 100%;
+                                    max-height: 200px;
+                                    border-radius: 8px;
+                                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                                    display: none;
+                                " alt="Preview da imagem" />
+                                <div id="imagePreviewPlaceholder" style="color: #999; font-style: italic;">
+                                    📷 Nenhuma imagem para mostrar
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editarMensagem">Mensagem Personalizada</label>
+                        <textarea 
+                            id="editarMensagem" 
+                            rows="8"
+                            placeholder="Digite a mensagem personalizada para este produto Amazon..."
+                            style="
+                                width: 100%;
+                                padding: 10px;
+                                font-size: 14px;
+                                border-radius: 10px;
+                                border: 2px solid #e1e8ed;
+                                resize: vertical;
+                                font-family: inherit;
+                            "
+                        ></textarea>
+                        <small style="color: #666; margin-top: 5px; display: block;">
+                            Esta será a mensagem enviada quando o produto for processado
+                        </small>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button 
+                            type="button" 
+                            class="btn-excluir" 
+                            onclick="closeEditModal()"
+                            style="
+                                background-color: #6c757d;
+                                color: white;
+                                padding: 12px 24px;
+                                border: none;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-size: 14px;
+                                margin-right: 10px;
+                            "
+                        >
+                            Cancelar
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn"
+                            style="
+                                background-color: #007bff;
+                                color: white;
+                                padding: 12px 24px;
+                                border: none;
+                                border-radius: 8px;
+                                cursor: pointer;
+                                font-size: 14px;
+                                font-weight: 600;
+                            "
+                        >
+                            Salvar Alterações
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

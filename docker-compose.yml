@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  scraper-promo:
+    build: .
+    container_name: scraper-promo
+    ports:
+      - "80:80"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - USER_AGENT=${USER_AGENT}
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - PROXY_HOST=${PROXY_HOST}
+      - PROXY_PORT=${PROXY_PORT}
+      - PROXY_USERNAME=${PROXY_USERNAME}
+      - PROXY_PASSWORD=${PROXY_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - scraper-network
+
+networks:
+  scraper-network:
+    driver: bridge

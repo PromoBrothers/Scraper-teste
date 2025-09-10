@@ -1,0 +1,6 @@
+# /mercado_livre_scraper/.gitignore
+
+.env
+__pycache__/
+venv/
+*.pyc

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scraper de Afiliados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>" />
+</head>
+<body>
+    <!-- Botão de toggle do modo escuro -->
+    <button class="theme-toggle" id="themeToggle" title="Alternar modo escuro">
+        🌙
+    </button>
+
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1>💰 Scraper de Afiliados</h1>
+                <p>Encontre produtos com links de afiliado de múltiplas plataformas</p>
+                <nav class="nav-links">
+                    <a href="/">Mercado Livre</a>
+                    <a href="/amazon">Amazon</a>
+                    <a href="/afiliados" class="active">Afiliados</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-form">
+                        <input
+                            type="text"
+                            id="produto"
+                            placeholder="Ex: smartphone, notebook, fone de ouvido..."
+                            class="search-input"
+                        />
+                        <div class="search-options">
+                            <label>
+                                <input type="number" id="max_pages" min="1" max="5" value="2" />
+                                <span>Páginas máximas</span>
+                            </label>
+                            <label>
+                                <select id="plataforma">
+                                    <option value="todas">Todas as plataformas</option>
+                                    <option value="shopee">Shopee</option>
+                                    <option value="aliexpress">AliExpress</option>
+                                    <option value="magazine">Magazine Luiza</option>
+                                    <option value="casasbahia">Casas Bahia</option>
+                                    <option value="submarino">Submarino</option>
+                                    <option value="americanas">Americanas</option>
+                                </select>
+                                <span>Plataforma</span>
+                            </label>
+                            <label>
+                                <select id="ordenacao">
+                                    <option value="relevancia">Relevância</option>
+                                    <option value="menor_preco">Menor preço</option>
+                                    <option value="maior_desconto">Maior desconto</option>
+                                    <option value="mais_vendidos">Mais vendidos</option>
+                                </select>
+                                <span>Ordenação</span>
+                            </label>
+                            <label>
+                                <input type="number" id="preco_min" placeholder="0" min="0" />
+                                <span>Preço mínimo (R$)</span>
+                            </label>
+                            <label>
+                                <input type="number" id="preco_max" placeholder="1000" min="0" />
+                                <span>Preço máximo (R$)</span>
+                            </label>
+                        </div>
+                        <button onclick="buscarProdutos()" class="search-btn" id="buscar-btn">
+                            <span class="btn-text">🔍 Buscar Produtos</span>
+                            <span class="btn-loading" style="display: none;">
+                                <div class="spinner"></div>
+                                Buscando...
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="affiliate-stats" id="affiliate-stats" style="display: none;">
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-produtos">0</span>
+                        <span class="stat-label">Produtos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-plataformas">0</span>
+                        <span class="stat-label">Plataformas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="comissao-media">0%</span>
+                        <span class="stat-label">Comissão Média</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="desconto-medio">0%</span>
+                        <span class="stat-label">Desconto Médio</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filters-section" id="filters-section" style="display: none;">
+                <div class="filters-container">
+                    <button class="filter-btn active" onclick="filtrarPor('todos')">Todos</button>
+                    <button class="filter-btn" onclick="filtrarPor('promocao')">Em Promoção</button>
+                    <button class="filter-btn" onclick="filtrarPor('frete-gratis')">Frete Grátis</button>
+                    <button class="filter-btn" onclick="filtrarPor('alta-comissao')">Alta Comissão</button>
+                </div>
+            </div>
+
+            <div class="results-section" id="results-section" style="display: none;">
+                <div class="results-header">
+                    <h2>Produtos com Links de Afiliado</h2>
+                    <div class="results-actions">
+                        <button onclick="exportarCSV()" class="export-btn">📊 Exportar CSV</button>
+                        <button onclick="copiarLinks()" class="copy-btn">📋 Copiar Links</button>
+                    </div>
+                </div>
+                <div class="results-grid" id="results-grid"></div>
+            </div>
+
+            <div class="loading-section" id="loading-section" style="display: none;">
+                <div class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Buscando produtos em múltiplas plataformas...</p>
+                    <div class="loading-progress">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <small id="loading-status">Iniciando busca...</small>
+                </div>
+            </div>
+
+            <div class="error-section" id="error-section" style="display: none;">
+                <div class="error-container">
+                    <h3>❌ Erro na busca</h3>
+                    <p id="error-message"></p>
+                    <button onclick="location.reload()" class="retry-btn">Tentar novamente</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentResults = [];
+        let currentFilter = 'todos';
+
+        // Theme toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            this.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+        async function buscarProdutos() {
+            const produto = document.getElementById('produto').value.trim();
+            const maxPages = parseInt(document.getElementById('max_pages').value);
+            const plataforma = document.getElementById('plataforma').value;
+            const ordenacao = document.getElementById('ordenacao').value;
+            const precoMin = document.getElementById('preco_min').value;
+            const precoMax = document.getElementById('preco_max').value;
+
+            if (!produto) {
+                alert('Por favor, digite um produto para buscar');
+                return;
+            }
+
+            // UI Updates
+            const buscarBtn = document.getElementById('buscar-btn');
+            const btnText = buscarBtn.querySelector('.btn-text');
+            const btnLoading = buscarBtn.querySelector('.btn-loading');
+
+            buscarBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'flex';
+
+            document.getElementById('loading-section').style.display = 'block';
+            document.getElementById('results-section').style.display = 'none';
+            document.getElementById('error-section').style.display = 'none';
+            document.getElementById('affiliate-stats').style.display = 'none';
+            document.getElementById('filters-section').style.display = 'none';
+
+            try {
+                const response = await fetch('/buscar-afiliados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        produto: produto,
+                        max_pages: maxPages,
+                        plataforma: plataforma,
+                        ordenacao: ordenacao,
+                        preco_min: precoMin,
+                        preco_max: precoMax
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro na busca');
+                }
+
+                currentResults = data.produtos || [];
+                displayResults(currentResults);
+                updateStats(currentResults);
+
+            } catch (error) {
+                console.error('Erro:', error);
+                showError(error.message);
+            } finally {
+                // Reset button
+                buscarBtn.disabled = false;
+                btnText.style.display = 'flex';
+                btnLoading.style.display = 'none';
+                document.getElementById('loading-section').style.display = 'none';
+            }
+        }
+
+        function displayResults(produtos) {
+            const resultsSection = document.getElementById('results-section');
+            const resultsGrid = document.getElementById('results-grid');
+
+            if (!produtos || produtos.length === 0) {
+                showError('Nenhum produto encontrado');
+                return;
+            }
+
+            resultsGrid.innerHTML = '';
+
+            produtos.forEach((produto, index) => {
+                const productCard = createAffiliateProductCard(produto, index);
+                resultsGrid.appendChild(productCard);
+            });
+
+            resultsSection.style.display = 'block';
+            document.getElementById('filters-section').style.display = 'block';
+        }
+
+        function createAffiliateProductCard(produto, index) {
+            const card = document.createElement('div');
+            card.className = 'product-card affiliate-card';
+            card.setAttribute('data-platform', produto.plataforma);
+            card.setAttribute('data-promocao', produto.tem_promocao ? 'true' : 'false');
+            card.setAttribute('data-frete', produto.frete_gratis ? 'true' : 'false');
+            card.setAttribute('data-comissao', produto.comissao_pct || 0);
+
+            card.innerHTML = `
+                <div class="product-image">
+                    ${produto.imagem ? 
+                        `<img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.style.display='none'">` : 
+                        '<div class="no-image">📦</div>'
+                    }
+                    <div class="platform-badge">${produto.plataforma}</div>
+                    ${produto.frete_gratis ? '<div class="frete-badge">Frete Grátis</div>' : ''}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${produto.nome}</h3>
+                    <div class="product-price">
+                        ${produto.preco_atual !== 'Preço não disponível' ? 
+                            `<span class="current-price">R$ ${produto.preco_atual}</span>` : 
+                            '<span class="no-price">Preço não disponível</span>'
+                        }
+                        ${produto.preco_original && produto.preco_original !== produto.preco_atual ? 
+                            `<span class="original-price">R$ ${produto.preco_original}</span>` : ''
+                        }
+                        ${produto.desconto ? 
+                            `<span class="discount">${produto.desconto}% OFF</span>` : ''
+                        }
+                    </div>
+                    <div class="product-rating">
+                        ${produto.rating ? `⭐ ${produto.rating}` : ''}
+                        ${produto.reviews ? `(${produto.reviews} avaliações)` : ''}
+                    </div>
+                    <div class="affiliate-info">
+                        ${produto.comissao_pct ? 
+                            `<span class="commission">💰 ${produto.comissao_pct}% comissão</span>` : ''
+                        }
+                        ${produto.vendas ? 
+                            `<span class="sales">📈 ${produto.vendas} vendas</span>` : ''
+                        }
+                    </div>
+                    <div class="product-actions">
+                        <a href="${produto.link_afiliado || produto.link}" target="_blank" class="affiliate-btn">
+                            💰 Link de Afiliado
+                        </a>
+                        <button onclick="copiarLink('${produto.link_afiliado || produto.link}')" class="copy-link-btn">
+                            📋 Copiar
+                        </button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function updateStats(produtos) {
+            if (!produtos || produtos.length === 0) return;
+
+            const totalProdutos = produtos.length;
+            const plataformas = [...new Set(produtos.map(p => p.plataforma))].length;
+            
+            const comissoes = produtos.filter(p => p.comissao_pct).map(p => parseFloat(p.comissao_pct));
+            const comissaoMedia = comissoes.length > 0 ? 
+                (comissoes.reduce((a, b) => a + b, 0) / comissoes.length).toFixed(1) : 0;
+            
+            const descontos = produtos.filter(p => p.desconto).map(p => parseFloat(p.desconto));
+            const descontoMedio = descontos.length > 0 ? 
+                (descontos.reduce((a, b) => a + b, 0) / descontos.length).toFixed(1) : 0;
+
+            document.getElementById('total-produtos').textContent = totalProdutos;
+            document.getElementById('total-plataformas').textContent = plataformas;
+            document.getElementById('comissao-media').textContent = comissaoMedia + '%';
+            document.getElementById('desconto-medio').textContent = descontoMedio + '%';
+
+            document.getElementById('affiliate-stats').style.display = 'block';
+        }
+
+        function filtrarPor(filtro) {
+            currentFilter = filtro;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter products
+            const cards = document.querySelectorAll('.affiliate-card');
+            cards.forEach(card => {
+                let show = false;
+                
+                switch(filtro) {
+                    case 'todos':
+                        show = true;
+                        break;
+                    case 'promocao':
+                        show = card.getAttribute('data-promocao') === 'true';
+                        break;
+                    case 'frete-gratis':
+                        show = card.getAttribute('data-frete') === 'true';
+                        break;
+                    case 'alta-comissao':
+                        show = parseFloat(card.getAttribute('data-comissao')) >= 5;
+                        break;
+                }
+                
+                card.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        function copiarLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                // Show temporary feedback
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        function copiarLinks() {
+            const links = currentResults.map(p => p.link_afiliado || p.link).join('\\n');
+            navigator.clipboard.writeText(links).then(() => {
+                alert('Todos os links foram copiados!');
+            });
+        }
+
+        function exportarCSV() {
+            if (!currentResults || currentResults.length === 0) return;
+
+            const headers = ['Nome', 'Plataforma', 'Preço', 'Desconto', 'Comissão', 'Link'];
+            const rows = currentResults.map(p => [
+                p.nome,
+                p.plataforma,
+                p.preco_atual,
+                p.desconto || '',
+                p.comissao_pct || '',
+                p.link_afiliado || p.link
+            ]);
+
+            const csvContent = [headers, ...rows].map(row => 
+                row.map(field => `"${field}"`).join(',')
+            ).join('\\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'produtos-afiliados.csv';
+            a.click();
+        }
+
+        function showError(message) {
+            const errorSection = document.getElementById('error-section');
+            const errorMessage = document.getElementById('error-message');
+            
+            errorMessage.textContent = message;
+            errorSection.style.display = 'block';
+            document.getElementById('results-section').style.display = 'none';
+        }
+
+        // Enter key support
+        document.getElementById('produto').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarProdutos();
+            }
+        });
+
+        // Auto-focus on search input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('produto').focus();
+        });
+    </script>
+
+    <style>
+        .affiliate-card {
+            position: relative;
+        }
+        
+        .platform-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .frete-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .affiliate-info {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .commission {
+            background: #f39c12;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .sales {
+            background: #2ecc71;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .affiliate-btn {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .affiliate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .copy-link-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .affiliate-stats {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .filters-section {
+            margin: 20px 0;
+        }
+        
+        .filters-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .results-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .export-btn, .copy-btn {
+            padding: 8px 16px;
+            background: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .export-btn:hover, .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .loading-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0;
+            transition: width 0.3s ease;
+            animation: progress 2s infinite;
+        }
+        
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+    </style>
+</body>
+</html>

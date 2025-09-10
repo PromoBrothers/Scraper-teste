@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mercado Livre Scraper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>" />
+    
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <!-- Botão de toggle do modo escuro -->
+    <button class="theme-toggle" id="themeToggle" title="Alternar modo escuro">
+      🌙
+    </button>
+    
+    <div class="container">
+      <div class="header">
+        <h1>🛒 Mercado Livre Scraper</h1>
+        <p>Encontre os melhores produtos e preços do Mercado Livre</p>
+        <nav class="nav-links" style="margin-top: 15px;">
+          <a href="/" class="active">Mercado Livre</a>
+          <a href="/amazon">Amazon</a>
+          <a href="/afiliados">Afiliados</a>
+        </nav>
+      </div>
+
+      <div class="search-section">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showTab('busca', this)">
+            🔍 Buscar Produtos
+          </button>
+          <button class="tab-btn" onclick="showTab('link', this)">
+            🔗 Analisar Link
+          </button>
+          <button class="tab-btn" onclick="showTab('webhook', this)">
+            📢 Enviar Webhook
+          </button>
+          <button class="tab-btn" onclick="showTab('agendamento', this)">
+            📅 Agendamento
+          </button>
+          <button class="tab-btn" onclick="showTab('config', this)">
+            ⚙️ Configurações
+          </button>
+        </div>
+
+        <div id="tab-busca" class="tab-content active">
+          <form class="search-form" id="searchForm">
+            <div class="form-group">
+              <label for="produto">Produto</label>
+              <input
+                type="text"
+                id="produto"
+                name="produto"
+                placeholder="Ex: smartphone samsung"
+                required
+              />
+            </div>
+            <div class="form-group" style="flex: 0 0 150px">
+              <label for="maxPages">Páginas</label>
+              <select id="maxPages" name="maxPages">
+                <option value="1">1 página</option>
+                <option value="2">2 páginas</option>
+                <option value="3" selected>3 páginas</option>
+                <option value="5">5 páginas</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex: 0 0 auto">
+              <button type="submit" class="btn" id="searchBtn">
+                Buscar Produtos
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="tab-link" class="tab-content">
+          <form class="search-form" id="linkForm">
+            <div class="form-group">
+              <label for="produtoUrl">Link do Produto (Mercado Livre)</label>
+              <input
+                type="url"
+                id="produtoUrl"
+                name="produtoUrl"
+                placeholder="https://produto.mercadolivre.com.br/..."
+                required
+              />
+            </div>
+            <div class="form-group" style="flex: 0 0 auto">
+              <button type="submit" class="btn" id="linkBtn">
+                Analisar Produto
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="tab-webhook" class="tab-content">
+          <div class="webhook-container">
+            <div class="webhook-header">
+              <h3>📤 Envio em Massa para Webhook</h3>
+              <p>Adicione produtos para envio automático</p>
+            </div>
+
+            <div class="webhook-input-section">
+              <div class="input-methods">
+                <div class="input-method active" data-method="visual">
+                  <span class="method-icon">🎯</span>
+                  <span class="method-title">Modo Visual</span>
+                </div>
+                <div class="input-method" data-method="bulk">
+                  <span class="method-icon">📝</span>
+                  <span class="method-title">Modo em Massa</span>
+                </div>
+              </div>
+
+              <!-- Modo Visual -->
+              <div class="input-content visual-mode active">
+                <div class="add-product-card">
+                  <div class="add-product-form">
+                    <div class="form-row">
+                      <div class="form-group">
+                        <label for="productUrl">🔗 Link do Produto</label>
+                        <input
+                          type="url"
+                          id="productUrl"
+                          placeholder="https://produto.mercadolivre.com.br/..."
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="affiliateUrl"
+                          >💰 Link de Afiliado (opcional)</label
+                        >
+                        <input
+                          type="url"
+                          id="affiliateUrl"
+                          placeholder="https://link.afiliado..."
+                        />
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn add-product-btn"
+                      id="addProductBtn"
+                    >
+                      ➕ Adicionar Produto
+                    </button>
+                  </div>
+                </div>
+
+                <div class="products-queue" id="productsQueue">
+                  <div class="queue-header">
+                    <h4>
+                      🎯 Produtos na Fila <span class="queue-count">(0)</span>
+                    </h4>
+                    <button
+                      type="button"
+                      class="btn-secondary clear-queue-btn"
+                      id="clearQueueBtn"
+                    >
+                      🗑️ Limpar Fila
+                    </button>
+                  </div>
+                  <div class="queue-list" id="queueList">
+                    <div class="queue-empty">
+                      <span class="empty-icon">📦</span>
+                      <p>Nenhum produto na fila</p>
+                      <small>Adicione produtos usando o formulário acima</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modo em Massa -->
+              <div class="input-content bulk-mode">
+                <div class="bulk-input-card">
+                  <label for="webhookUrls"
+                    >📝 Lista de Links (Formato:
+                    link_produto,link_afiliado)</label
+                  >
+                  <textarea
+                    id="webhookUrls"
+                    name="webhookUrls"
+                    placeholder="Cole a lista de links aqui, um par por linha.&#10;Ex: https://produto.mercadolivre...,https://link.afiliado..."
+                    rows="12"
+                  ></textarea>
+                  <div class="bulk-actions">
+                    <button
+                      type="button"
+                      class="btn-secondary"
+                      id="clearWebhookTextareaBtn"
+                    >
+                      🗑️ Limpar Lista
+                    </button>
+                    <button type="button" class="btn" id="importFromBulkBtn">
+                      📥 Importar para Fila Visual
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="webhook-actions">
+              <form id="webhookForm">
+                <button
+                  type="submit"
+                  class="btn-primary process-webhook-btn"
+                  id="webhookBtn"
+                >
+                  <span class="btn-icon">🚀</span>
+                  <span class="btn-text">Processar Fila</span>
+                  <span class="btn-badge" id="processCount">0</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div id="tab-agendamento" class="tab-content">
+          <div class="search-section">
+            <form class="search-form" id="filtroAgendamentoForm">
+              <div class="form-group">
+                <label for="filtroStatus">Status</label>
+                <select id="filtroStatus" name="status">
+                  <option value="agendado">Agendado</option>
+                  <option value="nao-agendado">Não Agendado</option>
+                  <option value="todos">Todos</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="filtroOrdem">Ordenar por</label>
+                <select id="filtroOrdem" name="ordem">
+                  <option value="desc">Mais Recentes</option>
+                  <option value="asc">Mais Antigos</option>
+                </select>
+              </div>
+            </form>
+            <div id="agendamento-list-container">
+              <h3>Produtos na Base de Dados:</h3>
+              <div id="agendamento-list" class="products-grid">
+                <p>Carregando produtos...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aba de Configurações -->
+        <div id="tab-config" class="tab-content">
+          <div class="search-section">
+            <h3>⚙️ Configurações do Sistema</h3>
+            
+            <div class="config-section">
+              <h4>📁 Supabase Storage</h4>
+              <div class="form-group">
+                <label for="bucketSelector">Selecionar Bucket:</label>
+                <select 
+                  id="bucketSelector" 
+                  onchange="trocarBucketConfig()"
+                  style="
+                    width: 100%; 
+                    padding: 12px; 
+                    border: 1px solid #ddd; 
+                    border-radius: 8px; 
+                    font-size: 14px;
+                    background: white;
+                    cursor: pointer;
+                  "
+                >
+                  <option value="imagens_melhoradas_tech">🎨 imagens_melhoradas_tech (Principal)</option>
+                  <option value="imagens_melhorada">📷 imagens_melhorada (Alternativo)</option>
+                </select>
+                <small style="color: #666; margin-top: 5px; display: block;">
+                  📝 Escolha qual bucket usar para carregar as imagens
+                </small>
+              </div>
+              
+              <div class="form-group">
+                <label>Bucket Atual:</label>
+                <div id="bucketAtualInfo" style="
+                  padding: 10px;
+                  background-color: #f8f9fa;
+                  border: 1px solid #e1e8ed;
+                  border-radius: 6px;
+                  font-family: monospace;
+                  color: #333;
+                  font-size: 13px;
+                ">
+                  imagens_melhoradas_tech
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="supabaseUrl">URL do Supabase:</label>
+                <input 
+                  type="text" 
+                  id="supabaseUrl" 
+                  placeholder="https://xxx.supabase.co"
+                  value=""
+                  style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px;"
+                />
+              </div>
+              
+              <button 
+                type="button" 
+                class="btn"
+                onclick="salvarConfiguracoes()"
+                style="
+                  background-color: #27ae60;
+                  color: white;
+                  padding: 12px 24px;
+                  border: none;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  font-size: 14px;
+                  font-weight: 600;
+                  margin-top: 10px;
+                "
+              >
+                💾 Salvar Configurações
+              </button>
+              
+              <button 
+                type="button" 
+                class="btn"
+                onclick="testarConexao()"
+                style="
+                  background-color: #3498db;
+                  color: white;
+                  padding: 12px 24px;
+                  border: none;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  font-size: 14px;
+                  font-weight: 600;
+                  margin-top: 10px;
+                  margin-left: 10px;
+                "
+              >
+                🧪 Testar Conexão
+              </button>
+            </div>
+            
+            <div class="config-status" id="configStatus" style="
+              margin-top: 20px;
+              padding: 15px;
+              border-radius: 8px;
+              display: none;
+            ">
+            </div>
+          </div>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p>Processando...</p>
+        </div>
+      </div>
+
+      <div class="results-section" id="resultsSection">
+        <div class="results-header">
+          <div class="results-count" id="resultsCount"></div>
+          <button class="clear-btn" id="clearBtn">Limpar Resultados</button>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+
+      <div class="results-section" id="produtoSection" style="display: none">
+        <div class="results-header">
+          <div class="results-count">Produto Analisado</div>
+          <button class="clear-btn" id="clearProdutoBtn">Limpar</button>
+        </div>
+        <div id="produtoDetalhado"></div>
+      </div>
+
+      <div
+        class="results-section"
+        id="webhookMessageSection"
+        style="display: none"
+      >
+        <div class="results-header">
+          <div class="results-count">Resposta do Webhook</div>
+          <button class="clear-btn" id="clearWebhookBtn">Limpar</button>
+        </div>
+        <div id="webhookMessageContent"></div>
+      </div>
+    </div>
+
+    <div id="agendamentoModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Agendar Envio</h2>
+          <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="agendamentoForm">
+            <input type="hidden" id="agendarProdutoId" />
+            <div class="form-group">
+              <label for="agendarData">Data</label>
+              <input type="date" id="agendarData" required />
+            </div>
+            <div class="form-group">
+              <label for="agendarHora">Hora</label>
+              <input type="time" id="agendarHora" required />
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn">Salvar Agendamento</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="editarModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Produto</h2>
+          <span class="close" onclick="closeEditModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="editarForm">
+            <input type="hidden" id="editarProdutoId" />
+            <div class="form-group">
+              <label for="editarImagemUrl">Link da Imagem</label>
+              <div style="display: flex; gap: 10px; align-items: flex-end;">
+                <input
+                  type="url"
+                  id="editarImagemUrl"
+                  placeholder="https://exemplo.com/imagem.jpg"
+                  oninput="updateImagePreview()"
+                  style="flex: 1;"
+                />
+                <button
+                  type="button"
+                  class="btn"
+                  id="buscarImagemBtn"
+                  onclick="abrirSeletorImagens()"
+                  style="
+                    background-color: #3498db;
+                    color: white;
+                    padding: 10px 15px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    font-size: 14px;
+                  "
+                >
+                  📁 Buscar no Bucket
+                </button>
+              </div>
+              <small style="color: #666; margin-top: 5px; display: block">
+                Cole aqui o novo link da imagem ou use o botão para buscar no Supabase Storage
+              </small>
+
+              <div
+                id="imagePreviewContainer"
+                style="margin-top: 15px; text-align: center"
+              >
+                <div
+                  id="imagePreviewLabel"
+                  style="font-weight: 500; margin-bottom: 8px; color: #333"
+                >
+                  Preview da Imagem:
+                </div>
+                <div
+                  id="imagePreviewWrapper"
+                  style="
+                    border: 2px dashed #ddd;
+                    border-radius: 10px;
+                    padding: 20px;
+                    background-color: #fafafa;
+                    min-height: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  "
+                >
+                  <img
+                    id="imagePreview"
+                    style="
+                      max-width: 100%;
+                      max-height: 200px;
+                      border-radius: 8px;
+                      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                      display: none;
+                    "
+                    alt="Preview da imagem"
+                  />
+                  <div
+                    id="imagePreviewPlaceholder"
+                    style="color: #999; font-style: italic"
+                  >
+                    📷 Nenhuma imagem para mostrar
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="editarMensagem">Mensagem</label>
+              <textarea
+                id="editarMensagem"
+                rows="8"
+                placeholder="Digite a mensagem personalizada para este produto..."
+                style="
+                  width: 100%;
+                  padding: 10px;
+                  font-size: 14px;
+                  border-radius: 10px;
+                  border: 2px solid #e1e8ed;
+                  resize: vertical;
+                  font-family: inherit;
+                "
+              ></textarea>
+              <small style="color: #666; margin-top: 5px; display: block">
+                Esta será a mensagem enviada quando o produto for processado
+              </small>
+            </div>
+            
+            <!-- Seção de Cupom -->
+            <div class="cupom-section" style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e1e8ed;">
+              <h4 style="margin-bottom: 15px; color: #333; display: flex; align-items: center; gap: 8px;">
+                🎟️ Adicionar Cupom de Desconto
+              </h4>
+              
+              <div class="form-row" style="display: flex; flex-direction: column; gap: 15px;">
+                <!-- Primeira linha: Texto do Cupom -->
+                <div class="form-group">
+                  <label for="cupomTexto">Texto do Cupom</label>
+                  <input
+                    type="text"
+                    id="cupomTexto"
+                    placeholder="Ex: DESCONTO10, PROMO2024"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      font-size: 14px;
+                      border-radius: 8px;
+                      border: 2px solid #e1e8ed;
+                      font-family: inherit;
+                      text-transform: uppercase;
+                    "
+                    oninput="this.value = this.value.toUpperCase(); calcularDesconto();"
+                  />
+                </div>
+                
+                <!-- Segunda linha: Tipo e Valor -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                  <div class="form-group">
+                    <label for="cupomTipo">Tipo de Desconto</label>
+                    <select
+                      id="cupomTipo"
+                      style="
+                        width: 100%;
+                        padding: 10px;
+                        font-size: 14px;
+                        border-radius: 8px;
+                        border: 2px solid #e1e8ed;
+                        font-family: inherit;
+                        background: white;
+                      "
+                      onchange="alterarTipoCupom(); calcularDesconto();"
+                    >
+                      <option value="porcentagem">% Porcentagem</option>
+                      <option value="valor">R$ Valor Fixo</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="cupomValor" id="cupomValorLabel">Desconto (%)</label>
+                    <input
+                      type="number"
+                      id="cupomValor"
+                      placeholder="10"
+                      min="1"
+                      step="0.01"
+                      style="
+                        width: 100%;
+                        padding: 10px;
+                        font-size: 14px;
+                        border-radius: 8px;
+                        border: 2px solid #e1e8ed;
+                        font-family: inherit;
+                      "
+                      oninput="calcularDesconto();"
+                    />
+                  </div>
+                </div>
+                
+                <!-- Terceira linha: Link de Afiliado -->
+                <div class="form-group">
+                  <label for="cupomLinkAfiliado">🔗 Link de Afiliado (para usar na mensagem)</label>
+                  <input
+                    type="url"
+                    id="cupomLinkAfiliado"
+                    placeholder="https://seu-link-de-afiliado.com/produto"
+                    style="
+                      width: 100%;
+                      padding: 10px;
+                      font-size: 14px;
+                      border-radius: 8px;
+                      border: 2px solid #e1e8ed;
+                      font-family: inherit;
+                    "
+                  />
+                  <small style="color: #666; margin-top: 5px; display: block;">
+                    Este link será usado na mensagem do cupom. Se vazio, usará o link original do produto.
+                  </small>
+                </div>
+                
+                <button 
+                  type="button" 
+                  class="btn" 
+                  id="aplicarCupomBtn"
+                  onclick="aplicarCupom()"
+                  style="
+                    background-color: #ff6b6b;
+                    padding: 12px 24px;
+                    border-radius: 8px;
+                    border: none;
+                    color: white;
+                    font-weight: 600;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                    width: 100%;
+                  "
+                >
+                  🎟️ Aplicar Cupom ao Produto
+                </button>
+              </div>
+              
+              <div id="cupomPreview" style="
+                margin-top: 15px;
+                padding: 15px;
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                border: 1px solid #e1e8ed;
+                display: none;
+              ">
+                <div style="font-weight: 500; margin-bottom: 8px; color: #333;">
+                  📊 Preview do Desconto:
+                </div>
+                <div id="cupomInfo" style="font-size: 14px; color: #666;"></div>
+              </div>
+              
+              <small style="color: #666; margin-top: 8px; display: block;">
+                💡 O cupom será adicionado automaticamente à mensagem e o valor será recalculado
+              </small>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn-excluir"
+                onclick="closeEditModal()"
+              >
+                Cancelar
+              </button>
+              <button type="submit" class="btn">Salvar Alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Seletor de Imagens do Supabase Storage -->
+    <div id="seletorImagensModal" class="modal">
+      <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+          <h2>📁 Selecionar Imagem do Bucket</h2>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">
+            🎯 Bucket ativo: <span id="modalBucketAtivo" style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">carregando...</span>
+          </div>
+          <span class="close" onclick="fecharSeletorImagens()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <!-- Controles de busca e navegação -->
+          <div class="storage-controls" style="margin-bottom: 20px;">
+            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 200px;">
+                <input
+                  type="text"
+                  id="searchImagens"
+                  placeholder="🔍 Buscar imagens..."
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 2px solid #e1e8ed;
+                    border-radius: 8px;
+                    font-size: 14px;
+                  "
+                  oninput="buscarImagens()"
+                />
+              </div>
+              <div style="min-width: 120px;">
+                <select
+                  id="bucketSelect"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 2px solid #e1e8ed;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    background: white;
+                  "
+                  onchange="trocarBucket()"
+                >
+                  <option value="imagens_melhoradas_tech">🎨 imagens_melhoradas_tech</option>
+                  <option value="imagens_melhorada">📷 imagens_melhorada</option>
+                </select>
+              </div>
+              <button
+                type="button"
+                class="btn"
+                onclick="carregarImagens()"
+                style="
+                  background-color: #27ae60;
+                  color: white;
+                  padding: 10px 15px;
+                  border: none;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  font-size: 14px;
+                "
+              >
+                🔄 Atualizar
+              </button>
+            </div>
+          </div>
+
+          <!-- Loading para busca -->
+          <div id="loadingImagens" style="display: none; text-align: center; margin: 20px;">
+            <div style="display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 10px; color: #666;">Carregando imagens...</p>
+          </div>
+
+          <!-- Grid de imagens -->
+          <div id="imagensGrid" class="imagens-grid">
+            <p style="text-align: center; color: #666; margin: 40px;">
+              📷 Clique em "Atualizar" para carregar as imagens do bucket
+            </p>
+          </div>
+
+          <!-- Paginação -->
+          <div id="paginacaoImagens" style="display: none; margin-top: 20px; text-align: center;">
+            <button id="btnAnterior" onclick="paginaAnterior()" disabled>◀ Anterior</button>
+            <span id="infoPagina" style="margin: 0 15px;">Página 1</span>
+            <button id="btnProxima" onclick="proximaPagina()">Próxima ▶</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
