@@ -1552,8 +1552,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 2000);
   };
   
-  // Bucket atual
+  // Bucket atual e controle de paginação
   let bucketAtual = localStorage.getItem('selected_bucket') || 'imagens_melhoradas_tech';
+  let paginaAtual = 1;
+  let imagensPorPagina = 20;
+  let totalImagens = 0;
   
   // Funções do seletor de imagens
   window.abrirSeletorImagens = function() {
@@ -1574,29 +1577,119 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
   
-  window.carregarImagens = function() {
+  window.carregarImagens = async function(resetarPagina = true) {
     const loadingImagens = document.getElementById('loadingImagens');
     const imagensGrid = document.getElementById('imagensGrid');
+    const bucketSelect = document.getElementById('bucketSelect');
+    const searchImagens = document.getElementById('searchImagens');
+    const paginacaoImagens = document.getElementById('paginacaoImagens');
+    const infoPagina = document.getElementById('infoPagina');
     
     if (!loadingImagens || !imagensGrid) {
       showAlert('Elementos do modal não encontrados', 'error');
       return;
     }
     
+    if (resetarPagina) {
+      paginaAtual = 1;
+    }
+    
     loadingImagens.style.display = 'block';
     imagensGrid.innerHTML = '';
+    if (paginacaoImagens) paginacaoImagens.style.display = 'none';
     
-    // Simula carregamento de imagens
-    setTimeout(() => {
+    try {
+      const bucket = bucketSelect ? bucketSelect.value : 'imagens-produtos';
+      const search = searchImagens ? searchImagens.value.trim() : '';
+      
+      const params = new URLSearchParams({
+        bucket: bucket,
+        pasta: '',
+        search: search,
+        limite: imagensPorPagina.toString(),
+        offset: ((paginaAtual - 1) * imagensPorPagina).toString()
+      });
+      
+      const response = await fetch(`/storage/imagens?${params}`);
+      const data = await response.json();
+      
       loadingImagens.style.display = 'none';
+      
+      if (data.success && data.imagens && data.imagens.length > 0) {
+        totalImagens = data.total || data.imagens.length;
+        const totalPaginas = Math.ceil(totalImagens / imagensPorPagina);
+        
+        imagensGrid.innerHTML = data.imagens.map(imagem => `
+          <div class="imagem-item" style="
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.2s;
+            cursor: pointer;
+          " onclick="selecionarImagem('${imagem.url}', '${imagem.nome}')">
+            <img src="${imagem.url}" alt="${imagem.nome}" style="
+              width: 100%;
+              height: 200px;
+              object-fit: cover;
+              opacity: 0;
+              transition: opacity 0.3s;
+            " onload="this.style.opacity='1'" onerror="this.style.display='none'" />
+            <div style="padding: 10px;">
+              <p style="
+                font-size: 12px;
+                color: #666;
+                margin: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              ">${imagem.nome}</p>
+              <small style="color: #999;">${(imagem.tamanho / 1024).toFixed(1)} KB</small>
+            </div>
+          </div>
+        `).join('');
+        
+        // Atualizar controles de paginação
+        if (paginacaoImagens && infoPagina && totalPaginas > 1) {
+          infoPagina.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+          
+          const btnAnterior = document.getElementById('btnAnterior');
+          const btnProxima = document.getElementById('btnProxima');
+          
+          if (btnAnterior) {
+            btnAnterior.disabled = paginaAtual <= 1;
+            btnAnterior.style.opacity = paginaAtual <= 1 ? '0.5' : '1';
+          }
+          
+          if (btnProxima) {
+            btnProxima.disabled = paginaAtual >= totalPaginas;
+            btnProxima.style.opacity = paginaAtual >= totalPaginas ? '0.5' : '1';
+          }
+          
+          paginacaoImagens.style.display = 'block';
+        }
+        
+        showAlert(`${data.imagens.length} imagens carregadas (página ${paginaAtual})`, 'success');
+      } else {
+        imagensGrid.innerHTML = `
+          <p style="text-align: center; color: #666; margin: 40px;">
+            📷 Nenhuma imagem encontrada no bucket "${bucket}"<br>
+            <small>Faça um scraping primeiro para gerar imagens processadas</small>
+          </p>
+        `;
+        if (paginacaoImagens) paginacaoImagens.style.display = 'none';
+        showAlert('Nenhuma imagem encontrada no bucket', 'warning');
+      }
+    } catch (error) {
+      loadingImagens.style.display = 'none';
+      if (paginacaoImagens) paginacaoImagens.style.display = 'none';
       imagensGrid.innerHTML = `
-        <p style="text-align: center; color: #666; margin: 40px;">
-          🔧 Funcionalidade de carregamento de imagens será implementada em breve.<br>
-          Por enquanto, cole o link da imagem diretamente no campo acima.
+        <p style="text-align: center; color: #e74c3c; margin: 40px;">
+          ❌ Erro ao carregar imagens: ${error.message}
         </p>
       `;
-      showAlert('Funcionalidade em desenvolvimento', 'info');
-    }, 1000);
+      showAlert(`Erro ao carregar imagens: ${error.message}`, 'error');
+    }
   };
   
   window.trocarBucket = function() {
@@ -1605,7 +1698,7 @@ document.addEventListener("DOMContentLoaded", function () {
       bucketAtual = bucketSelect.value;
       localStorage.setItem('selected_bucket', bucketAtual);
       showAlert(`Bucket alterado para: ${bucketAtual}`, 'info');
-      carregarImagens();
+      carregarImagens(true);
     }
   };
   
@@ -1614,15 +1707,40 @@ document.addEventListener("DOMContentLoaded", function () {
     if (searchImagens) {
       const termo = searchImagens.value.trim();
       showAlert(termo ? `Buscando por: ${termo}` : 'Carregando todas as imagens', 'info');
-      carregarImagens();
+      carregarImagens(true);
     }
   };
   
   window.paginaAnterior = function() {
-    showAlert('Página anterior - funcionalidade em desenvolvimento', 'info');
+    if (paginaAtual > 1) {
+      paginaAtual--;
+      carregarImagens(false);
+    }
   };
   
   window.proximaPagina = function() {
-    showAlert('Próxima página - funcionalidade em desenvolvimento', 'info');
+    const totalPaginas = Math.ceil(totalImagens / imagensPorPagina);
+    if (paginaAtual < totalPaginas) {
+      paginaAtual++;
+      carregarImagens(false);
+    }
+  };
+  
+  window.selecionarImagem = function(url, nome) {
+    const editarImagemUrl = document.getElementById('editarImagemUrl');
+    
+    if (editarImagemUrl) {
+      editarImagemUrl.value = url;
+      updateImagePreview();
+      fecharSeletorImagens();
+      showAlert(`Imagem "${nome}" selecionada com sucesso!`, 'success');
+    } else {
+      // Fallback: copiar para área de transferência
+      navigator.clipboard.writeText(url).then(() => {
+        showAlert(`URL da imagem "${nome}" copiada para a área de transferência!`, 'success');
+      }).catch(() => {
+        showAlert(`Imagem selecionada: ${nome}`, 'info');
+      });
+    }
   };
 });

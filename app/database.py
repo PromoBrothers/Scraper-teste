@@ -84,29 +84,54 @@ def atualizar_produto_db(produto_id, dados_atualizacao):
     return supabase.table("promocoes").update(dados_atualizacao).eq("id", produto_id).execute()
 
 # As demais funções do database.py (listar_imagens_bucket, etc.) permanecem as mesmas.
-def listar_imagens_bucket(bucket_name="imagens", pasta="", limit=50, offset=0, search_term=""):
+def listar_imagens_bucket(bucket_name="imagens", pasta="", search_term="", limite=20, offset=0):
     try:
-        response = supabase.storage.from_(bucket_name).list(path=pasta, limit=limit, offset=offset)
+        # Primeiro, vamos pegar um número maior de itens para garantir que temos dados suficientes
+        response = supabase.storage.from_(bucket_name).list(path=pasta, options={'limit': 2000})
         if not response:
-            return []
-        imagens = []
+            return {'imagens': [], 'total': 0}
+        
+        # Filtrar apenas arquivos de imagem e aplicar busca
+        todas_imagens = []
         for arquivo in response:
             nome = arquivo.get('name', '')
-            if any(nome.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']):
+            if nome and any(nome.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg']):
+                # Aplicar filtro de busca se fornecido
                 if not search_term or search_term.lower() in nome.lower():
-                    url_publica = supabase.storage.from_(bucket_name).get_public_url(f"{pasta}/{nome}" if pasta else nome)
-                    imagens.append({
+                    caminho_completo = f"{pasta}/{nome}" if pasta else nome
+                    url_publica = supabase.storage.from_(bucket_name).get_public_url(caminho_completo)
+                    
+                    # Extrair informações do arquivo
+                    todas_imagens.append({
                         'nome': nome,
                         'url': url_publica,
-                        'tamanho': arquivo.get('metadata', {}).get('size', 0),
+                        'tamanho': arquivo.get('metadata', {}).get('size', 0) if arquivo.get('metadata') else 0,
                         'modificado_em': arquivo.get('updated_at', ''),
-                        'path_completo': f"{pasta}/{nome}" if pasta else nome
+                        'path_completo': caminho_completo
                     })
-        imagens.sort(key=lambda x: x.get('modificado_em', ''), reverse=True)
-        return imagens
+        
+        # Ordenar por data de modificação (mais recentes primeiro)
+        todas_imagens.sort(key=lambda x: x.get('modificado_em', ''), reverse=True)
+        
+        # Calcular total depois da filtragem
+        total = len(todas_imagens)
+        
+        # Aplicar paginação
+        inicio = offset
+        fim = offset + limite
+        imagens_paginadas = todas_imagens[inicio:fim]
+        
+        return {
+            'imagens': imagens_paginadas,
+            'total': total,
+            'limite': limite,
+            'offset': offset,
+            'total_paginas': (total + limite - 1) // limite if limite > 0 else 1
+        }
+        
     except Exception as e:
         print(f"Erro ao listar imagens do bucket: {e}")
-        return []
+        return {'imagens': [], 'total': 0}
 
 def obter_url_publica_imagem(bucket_name="imagens", caminho_arquivo=""):
     try:
@@ -130,3 +155,21 @@ def listar_pastas_bucket(bucket_name="imagens", pasta_pai=""):
     except Exception as e:
         print(f"Erro ao listar pastas do bucket: {e}")
         return []
+
+def criar_bucket_se_nao_existir(bucket_name="imagens-produtos"):
+    """Cria o bucket se ele não existir."""
+    try:
+        # Tentar listar buckets para verificar se existe
+        buckets = supabase.storage.list_buckets()
+        bucket_exists = any(bucket.name == bucket_name for bucket in buckets)
+        
+        if not bucket_exists:
+            # Criar bucket público para imagens
+            supabase.storage.create_bucket(bucket_name, options={"public": True})
+            print(f"DEBUG: Bucket '{bucket_name}' criado com sucesso")
+        else:
+            print(f"DEBUG: Bucket '{bucket_name}' já existe")
+        return True
+    except Exception as e:
+        print(f"Erro ao criar/verificar bucket: {e}")
+        return False

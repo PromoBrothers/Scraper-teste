@@ -557,23 +557,35 @@ def enviar_produto_agendado(produto_id):
 @main_bp.route('/storage/imagens', methods=['GET'])
 def listar_imagens():
     try:
-        bucket_name = request.args.get('bucket', os.getenv('SUPABASE_BUCKET_NAME', 'imagens_melhoradas_tech'))
+        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens-produtos'))
         pasta = request.args.get('pasta', '')
-        limit = int(request.args.get('limit', 50))
-        offset = int(request.args.get('offset', 0))
         search_term = request.args.get('search', '')
-        imagens = database.listar_imagens_bucket(
-            bucket_name=bucket_name, pasta=pasta, limit=limit,
-            offset=offset, search_term=search_term
+        limite = int(request.args.get('limite', 20))
+        offset = int(request.args.get('offset', 0))
+        
+        # Chamar função do database com os novos parâmetros
+        resultado = database.listar_imagens_bucket(
+            bucket_name=bucket_name, 
+            pasta=pasta, 
+            search_term=search_term,
+            limite=limite,
+            offset=offset
         )
-        return jsonify({'success': True, 'imagens': imagens})
+        
+        # Se a função retorna um dicionário com paginação, usar diretamente
+        if isinstance(resultado, dict) and 'imagens' in resultado:
+            return jsonify({'success': True, **resultado})
+        else:
+            # Fallback para compatibilidade
+            return jsonify({'success': True, 'imagens': resultado, 'total': len(resultado)})
+            
     except Exception as e:
         return jsonify({'success': False, 'error': f'Erro ao listar imagens: {str(e)}'}), 500
 
 @main_bp.route('/storage/pastas', methods=['GET'])
 def listar_pastas():
     try:
-        bucket_name = request.args.get('bucket', os.getenv('SUPABASE_BUCKET_NAME', 'imagens_melhoradas_tech'))
+        bucket_name = request.args.get('bucket', os.getenv('BUCKET_NAME', 'imagens-produtos'))
         pasta_pai = request.args.get('pasta_pai', '')
         
         pastas = database.listar_pastas_bucket(
@@ -593,7 +605,7 @@ def listar_pastas():
 def obter_url_publica():
     try:
         data = request.get_json()
-        bucket_name = data.get('bucket', os.getenv('SUPABASE_BUCKET_NAME', 'imagens_melhoradas_tech'))
+        bucket_name = data.get('bucket', os.getenv('BUCKET_NAME', 'imagens-produtos'))
         caminho_arquivo = data.get('caminho', '')
         
         if not caminho_arquivo:

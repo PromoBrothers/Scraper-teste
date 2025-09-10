@@ -63,14 +63,30 @@ def processar_imagem_para_quadrado(url_imagem, tamanho_saida=(500, 500), cor_fun
         print(f"ERRO AO PROCESSAR IMAGEM: {e}")
         return None
 
-def upload_imagem_processada(image_bytes, bucket_name='imagens-produtos'):
+def upload_imagem_processada(image_bytes, bucket_name=None):
     """Faz o upload dos bytes de uma imagem para o Supabase Storage."""
     try:
+        if bucket_name is None:
+            bucket_name = os.getenv('BUCKET_NAME', 'imagens-produtos')
+            
         file_name = f"processed_{uuid.uuid4()}.jpg"
-        supabase.storage.from_(bucket_name).upload(file=image_bytes, path=file_name, file_options={"content-type": "image/jpeg"})
-        public_url_data = supabase.storage.from_(bucket_name).get_public_url(file_name)
         
-        return public_url_data
+        # Upload da imagem
+        upload_response = supabase.storage.from_(bucket_name).upload(
+            file=image_bytes, 
+            path=file_name, 
+            file_options={"content-type": "image/jpeg"}
+        )
+        
+        if upload_response:
+            # Obter URL pública
+            public_url = supabase.storage.from_(bucket_name).get_public_url(file_name)
+            print(f"DEBUG: Imagem uploaded com sucesso: {public_url}")
+            return public_url
+        else:
+            print("ERRO: Falha no upload da imagem")
+            return None
+            
     except Exception as e:
         print(f"ERRO NO UPLOAD PARA O SUPABASE STORAGE: {e}")
         return None

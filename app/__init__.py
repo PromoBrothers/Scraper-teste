@@ -20,6 +20,13 @@ def create_app():
     # Configuração para servir arquivos estáticos adequadamente
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 ano de cache
 
+    # Inicializar bucket de imagens
+    try:
+        from .database import criar_bucket_se_nao_existir
+        criar_bucket_se_nao_existir()
+    except Exception as e:
+        print(f"Aviso: Não foi possível inicializar bucket: {e}")
+
     # Registra as rotas (Blueprints)
     from . import routes
     app.register_blueprint(routes.main_bp)
