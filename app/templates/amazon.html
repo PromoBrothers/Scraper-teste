@@ -172,10 +172,10 @@
                     <input type="hidden" id="editarProdutoId" />
                     <div class="form-group">
                         <label for="editarImagemUrl">Link da Imagem</label>
-                        <input 
-                            type="url" 
-                            id="editarImagemUrl" 
-                            placeholder="https://exemplo.com/imagem.jpg" 
+                        <input
+                            type="url"
+                            id="editarImagemUrl"
+                            placeholder="https://exemplo.com/imagem.jpg"
                             oninput="updateImagePreview()"
                             style="
                                 width: 100%;
@@ -219,8 +219,8 @@
                     
                     <div class="form-group">
                         <label for="editarMensagem">Mensagem Personalizada</label>
-                        <textarea 
-                            id="editarMensagem" 
+                        <textarea
+                            id="editarMensagem"
                             rows="8"
                             placeholder="Digite a mensagem personalizada para este produto Amazon..."
                             style="
@@ -235,6 +235,138 @@
                         ></textarea>
                         <small style="color: #666; margin-top: 5px; display: block;">
                             Esta será a mensagem enviada quando o produto for processado
+                        </small>
+                    </div>
+
+                    <!-- Seção de Cupom -->
+                    <div class="cupom-section" style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e1e8ed;">
+                        <h4 style="margin-bottom: 15px; color: #333; display: flex; align-items: center; gap: 8px;">
+                            🎟️ Adicionar Cupom de Desconto
+                        </h4>
+
+                        <div class="form-row" style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- Primeira linha: Texto do Cupom -->
+                            <div class="form-group">
+                                <label for="cupomTexto">Texto do Cupom</label>
+                                <input
+                                    type="text"
+                                    id="cupomTexto"
+                                    placeholder="Ex: DESCONTO10, PROMO2024"
+                                    style="
+                                        width: 100%;
+                                        padding: 10px;
+                                        font-size: 14px;
+                                        border-radius: 8px;
+                                        border: 2px solid #e1e8ed;
+                                        font-family: inherit;
+                                        text-transform: uppercase;
+                                    "
+                                    oninput="this.value = this.value.toUpperCase(); calcularDesconto();"
+                                />
+                            </div>
+
+                            <!-- Segunda linha: Tipo e Valor -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="form-group">
+                                    <label for="cupomTipo">Tipo de Desconto</label>
+                                    <select
+                                        id="cupomTipo"
+                                        style="
+                                            width: 100%;
+                                            padding: 10px;
+                                            font-size: 14px;
+                                            border-radius: 8px;
+                                            border: 2px solid #e1e8ed;
+                                            font-family: inherit;
+                                            background: white;
+                                        "
+                                        onchange="alterarTipoCupom(); calcularDesconto();"
+                                    >
+                                        <option value="porcentagem">% Porcentagem</option>
+                                        <option value="valor">R$ Valor Fixo</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cupomValor" id="cupomValorLabel">Desconto (%)</label>
+                                    <input
+                                        type="number"
+                                        id="cupomValor"
+                                        placeholder="10"
+                                        min="1"
+                                        step="0.01"
+                                        style="
+                                            width: 100%;
+                                            padding: 10px;
+                                            font-size: 14px;
+                                            border-radius: 8px;
+                                            border: 2px solid #e1e8ed;
+                                            font-family: inherit;
+                                        "
+                                        oninput="calcularDesconto();"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Terceira linha: Link de Afiliado -->
+                            <div class="form-group">
+                                <label for="cupomLinkAfiliado">🔗 Link de Afiliado (para usar na mensagem)</label>
+                                <input
+                                    type="url"
+                                    id="cupomLinkAfiliado"
+                                    placeholder="https://seu-link-de-afiliado.com/produto"
+                                    style="
+                                        width: 100%;
+                                        padding: 10px;
+                                        font-size: 14px;
+                                        border-radius: 8px;
+                                        border: 2px solid #e1e8ed;
+                                        font-family: inherit;
+                                    "
+                                />
+                                <small style="color: #666; margin-top: 5px; display: block;">
+                                    Este link será usado na mensagem do cupom. Se vazio, usará o link original do produto.
+                                </small>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="btn"
+                                id="aplicarCupomBtn"
+                                onclick="aplicarCupom()"
+                                style="
+                                    background-color: #ff6b6b;
+                                    padding: 12px 24px;
+                                    border-radius: 8px;
+                                    border: none;
+                                    color: white;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    font-size: 14px;
+                                    transition: all 0.3s ease;
+                                    width: 100%;
+                                "
+                            >
+                                🎟️ Aplicar Cupom ao Produto
+                            </button>
+                        </div>
+
+                        <div id="cupomPreview" style="
+                            margin-top: 15px;
+                            padding: 15px;
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            border: 1px solid #e1e8ed;
+                            display: none;
+                        ">
+                            <div style="font-weight: 500; margin-bottom: 8px; color: #333;">
+                                📊 Preview do Desconto:
+                            </div>
+                            <div id="cupomInfo" style="font-size: 14px; color: #666;"></div>
+                        </div>
+
+                        <small style="color: #666; margin-top: 8px; display: block;">
+                            💡 O cupom será adicionado automaticamente à mensagem e o valor será recalculado
                         </small>
                     </div>
                     
@@ -276,6 +408,95 @@
                 </form>
             </div>
         </div>
+    </div>
+
+    <!-- Modal Seletor de Imagens do Supabase Storage -->
+    <div id="seletorImagensModal" class="modal">
+      <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+          <h2>📁 Selecionar Imagem do Bucket</h2>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">
+            🎯 Bucket ativo: <span id="modalBucketAtivo" style="font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px;">carregando...</span>
+          </div>
+          <span class="close" onclick="fecharSeletorImagens()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <!-- Controles de busca e navegação -->
+          <div class="storage-controls" style="margin-bottom: 20px;">
+            <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 200px;">
+                <input
+                  type="text"
+                  id="searchImagens"
+                  placeholder="🔍 Buscar imagens..."
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 2px solid #e1e8ed;
+                    border-radius: 8px;
+                    font-size: 14px;
+                  "
+                  oninput="buscarImagens()"
+                />
+              </div>
+              <div style="min-width: 120px;">
+                <select
+                  id="bucketSelect"
+                  style="
+                    width: 100%;
+                    padding: 10px;
+                    border: 2px solid #e1e8ed;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    background: white;
+                  "
+                  onchange="trocarBucket()"
+                >
+                  <option value="imagens-produtos">🎨 imagens-produtos</option>
+                  <option value="imagens_melhoradas_tech" selected>📷 imagens_melhoradas_tech</option>
+                  <option value="imagens_melhorada">🔧 imagens_melhorada</option>
+                </select>
+              </div>
+              <button
+                type="button"
+                class="btn"
+                onclick="carregarImagens()"
+                style="
+                  background-color: #27ae60;
+                  color: white;
+                  padding: 10px 15px;
+                  border: none;
+                  border-radius: 8px;
+                  cursor: pointer;
+                  font-size: 14px;
+                "
+              >
+                🔄 Atualizar
+              </button>
+            </div>
+          </div>
+
+          <!-- Loading para busca -->
+          <div id="loadingImagens" style="display: none; text-align: center; margin: 20px;">
+            <div style="display: inline-block; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid #3498db; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <p style="margin-top: 10px; color: #666;">Carregando imagens...</p>
+          </div>
+
+          <!-- Grid de imagens -->
+          <div id="imagensGrid" class="imagens-grid">
+            <p style="text-align: center; color: #666; margin: 40px;">
+              📷 Clique em "Atualizar" para carregar as imagens do bucket
+            </p>
+          </div>
+
+          <!-- Paginação -->
+          <div id="paginacaoImagens" style="display: none; margin-top: 20px; text-align: center;">
+            <button id="btnAnterior" onclick="paginaAnterior()" disabled>◀ Anterior</button>
+            <span id="infoPagina" style="margin: 0 15px;">Página 1</span>
+            <button id="btnProxima" onclick="proximaPagina()">Próxima ▶</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>

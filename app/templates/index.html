@@ -458,8 +458,38 @@
                   📁 Buscar no Bucket
                 </button>
               </div>
+
+              <!-- Campo de upload de imagem -->
+              <div style="margin-top: 10px;">
+                <input
+                  type="file"
+                  id="editarImagemFile"
+                  accept="image/*"
+                  style="display: none;"
+                  onchange="handleImageUpload(this)"
+                />
+                <button
+                  type="button"
+                  class="btn"
+                  onclick="document.getElementById('editarImagemFile').click()"
+                  style="
+                    background-color: #27ae60;
+                    color: white;
+                    padding: 10px 15px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    width: 100%;
+                    margin-top: 5px;
+                  "
+                >
+                  📤 Fazer Upload de Nova Imagem
+                </button>
+              </div>
+
               <small style="color: #666; margin-top: 5px; display: block">
-                Cole aqui o novo link da imagem ou use o botão para buscar no Supabase Storage
+                Cole um link de imagem, busque no bucket ou faça upload de uma nova imagem
               </small>
 
               <div

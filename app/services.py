@@ -125,49 +125,62 @@ def enviar_para_webhook(payload):
 
 def formatar_mensagem_com_ia(produto_dados):
     """
-    Envia os dados do produto para o agente de IA do n8n e retorna a mensagem formatada.
+    Envia os dados do produto para o webhook de IA e retorna a mensagem formatada.
+    Usa o mesmo formato do webhook principal para compatibilidade.
     """
-    if not N8N_AI_AGENT_URL:
-        raise Exception("N8N_AI_AGENT_URL não configurada no .env")
-    
+    # TEMPORÁRIO: Desabilitando webhook por estar retornando dados de teste
+    # if not N8N_AI_AGENT_URL:
+    #     raise Exception("N8N_AI_AGENT_URL não configurada no .env")
+    raise Exception("Webhook temporariamente desabilitado - usando fallback local")
+
     try:
-        # Preparar payload para o agente de IA
+        # Preparar payload no mesmo formato do webhook principal
+        # Incluir um indicador de que é para geração de mensagem apenas
         payload = {
-            "titulo": produto_dados.get('titulo', ''),
-            "preco_atual": produto_dados.get('preco_atual', ''),
-            "preco_original": produto_dados.get('preco_original'),
-            "desconto": produto_dados.get('desconto'),
-            "tem_promocao": produto_dados.get('tem_promocao', False),
-            "link": produto_dados.get('afiliado_link') or produto_dados.get('link', ''),
-            "fonte": produto_dados.get('fonte', ''),
-            "plataforma": produto_dados.get('plataforma', '')
+            "message": "GENERATE_MESSAGE_ONLY",
+            "produto_dados": produto_dados
         }
-        
-        # Enviar para o agente de IA do n8n
+
+        # Enviar para o webhook de IA
         response = requests.post(
             N8N_AI_AGENT_URL,
             json=payload,
             headers={'Content-Type': 'application/json', 'User-Agent': 'Mercado-Livre-Scraper/1.0'},
             timeout=30
         )
-        
-        if response.status_code == 200:
-            result = response.json()
-            # Assumindo que o agente retorna a mensagem no campo 'message'
-            # Ajuste conforme o formato de resposta do seu agente
-            if isinstance(result, dict) and 'message' in result:
-                return result['message']
-            elif isinstance(result, str):
-                return result
-            else:
-                # Fallback para o primeiro valor string encontrado
-                for key, value in result.items():
-                    if isinstance(value, str) and len(value) > 10:
-                        return value
-                raise Exception(f"Formato de resposta inesperado: {result}")
+
+        if response.status_code in [200, 201, 202]:
+            try:
+                result = response.json()
+                # Processar resposta similar à função enviar_para_webhook
+                if isinstance(result, dict):
+                    # Tentar diferentes campos de resposta possíveis
+                    message = (
+                        result.get('message') or
+                        result.get('response') or
+                        result.get('text') or
+                        result.get('content') or
+                        result.get('generated_message')
+                    )
+                    if message and len(str(message)) > 10:
+                        return str(message)
+                elif isinstance(result, str) and len(result) > 10:
+                    return result
+
+                # Se não encontrou mensagem válida, usar texto bruto da resposta
+                if response.text and len(response.text) > 10:
+                    return response.text
+
+                raise Exception(f"Resposta do webhook não contém mensagem válida: {result}")
+
+            except requests.exceptions.JSONDecodeError:
+                # Se não é JSON, usar texto bruto
+                if response.text and len(response.text) > 10:
+                    return response.text
+                raise Exception("Resposta do webhook não é JSON válido e não contém texto")
         else:
-            raise Exception(f"Agente de IA retornou status {response.status_code}: {response.text}")
-            
+            raise Exception(f"Webhook de IA retornou status {response.status_code}: {response.text}")
+
     except Exception as e:
         print(f"Erro ao formatar mensagem com IA: {e}")
         raise e

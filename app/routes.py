@@ -8,6 +8,8 @@ import requests # Adicionado para tratar exceções de request
 import os
 import re
 import logging
+import uuid
+from werkzeug.utils import secure_filename
 
 # Importa as funções dos outros módulos
 from . import scraping, services, database
@@ -150,7 +152,7 @@ def formatar_mensagem_marketing(produto_dados):
             f"🛒 {link}\n\n"
             f"👾 Grupo de ofertas: https://linktr.ee/promobrothers.shop"
         )
-        
+
     return mensagem.strip()
 
 @main_bp.route('/')
@@ -213,6 +215,95 @@ def produto_amazon():
     except Exception as e:
         return jsonify({'error': f'Erro ao analisar produto: {str(e)}'}), 500
 
+@main_bp.route('/webhook/processar-amazon', methods=['POST'])
+def processar_produto_amazon_webhook():
+    """Endpoint para processar produto da Amazon usando webhook para geração de mensagem"""
+    produto_para_salvar = {}
+    try:
+        data = request.get_json()
+        url_produto = data.get('url_produto', '').strip()
+        afiliado_link = data.get('afiliado_link', '').strip()
+
+        if not url_produto:
+            return jsonify({'error': 'URL do produto é obrigatória'}), 400
+
+        if not ('amazon.com' in url_produto or 'amzn.to' in url_produto):
+            return jsonify({'error': 'URL deve ser da Amazon'}), 400
+
+        # Fazer scraping do produto da Amazon
+        start_time = time.time()
+        try:
+            produto_dados = amazon_scraping.scrape_produto_amazon_especifico(url_produto, afiliado_link)
+            response_time = time.time() - start_time
+
+            if not produto_dados:
+                return jsonify({'error': 'Produto não encontrado ou não foi possível extrair dados'}), 404
+
+            produto_para_salvar = produto_dados.copy()
+            produto_para_salvar['afiliado_link'] = afiliado_link
+            produto_para_salvar['plataforma'] = 'Amazon'
+            produto_para_salvar['fonte'] = 'Amazon'
+
+            # Garantir que o campo 'titulo' esteja presente para compatibilidade
+            if 'nome' in produto_para_salvar and 'titulo' not in produto_para_salvar:
+                produto_para_salvar['titulo'] = produto_para_salvar['nome']
+
+            # Comentado: Não processar imagem automaticamente na fila
+            # original_image_url = produto_para_salvar.get('imagem')
+            # if original_image_url:
+            #     try:
+            #         image_bytes = services.processar_imagem_para_quadrado(original_image_url)
+            #         if image_bytes:
+            #             produto_para_salvar['processed_image_url'] = services.upload_imagem_processada(image_bytes)
+            #     except Exception as e:
+            #         print(f"Erro ao processar imagem: {e}")
+
+            # Usar webhook para gerar mensagem ao invés de geração local
+            try:
+                mensagem_formatada = services.formatar_mensagem_com_ia(produto_para_salvar)
+                print("DEBUG: Mensagem da Amazon gerada via webhook de IA")
+            except Exception as e:
+                print(f"Erro ao gerar mensagem via webhook: {e}")
+                # Fallback para geração local se webhook falhar
+                mensagem_formatada = formatar_mensagem_marketing(produto_para_salvar)
+                print("DEBUG: Usando fallback para geração de mensagem local da Amazon")
+
+            # Enviar para webhook
+            payload = {
+                "message": mensagem_formatada,
+                "produto_dados": produto_para_salvar
+            }
+
+            webhook_response = services.enviar_para_webhook(payload)
+
+            # Usar a mensagem do webhook se disponível, senão usar a mensagem local
+            final_message_to_return = webhook_response.webhook_message if hasattr(webhook_response, 'webhook_message') and webhook_response.webhook_message else mensagem_formatada
+
+            # Salvar no banco de dados
+            database.salvar_promocao(produto_para_salvar, final_message=final_message_to_return)
+
+            return jsonify({
+                'success': True,
+                'message': 'Produto da Amazon processado e webhook enviado com sucesso!',
+                'produto': produto_para_salvar,
+                'final_message': final_message_to_return,
+                'image_url': produto_para_salvar.get('processed_image_url') or produto_para_salvar.get('imagem'),
+                'webhook_status': webhook_response.status_code,
+                'platform': 'Amazon',
+                'response_time': round(response_time, 2)
+            })
+
+        except Exception as e:
+            response_time = time.time() - start_time
+            print(f"Erro ao processar produto da Amazon: {e}")
+            raise
+
+    except Exception as e:
+        final_message_erro = f'Erro interno: {str(e)}'
+        if produto_para_salvar:
+            database.salvar_promocao(produto_para_salvar, final_message=final_message_erro)
+        return jsonify({'error': final_message_erro}), 500
+
 @main_bp.route('/buscar-afiliados', methods=['POST'])
 def buscar_afiliados():
     try:
@@ -267,11 +358,12 @@ def enviar_webhook():
             produto_para_salvar = produto_dados.copy()
             produto_para_salvar['afiliado_link'] = afiliado_link
 
-            original_image_url = produto_para_salvar.get('imagem')
-            if original_image_url:
-                image_bytes = services.processar_imagem_para_quadrado(original_image_url)
-                if image_bytes:
-                    produto_para_salvar['processed_image_url'] = services.upload_imagem_processada(image_bytes)
+            # Comentado: Não processar imagem automaticamente na fila
+            # original_image_url = produto_para_salvar.get('imagem')
+            # if original_image_url:
+            #     image_bytes = services.processar_imagem_para_quadrado(original_image_url)
+            #     if image_bytes:
+            #         produto_para_salvar['processed_image_url'] = services.upload_imagem_processada(image_bytes)
             
             # Usar webhook para gerar mensagem ao invés de geração local
             try:
@@ -294,7 +386,7 @@ def enviar_webhook():
                 'success': True, 
                 'message': 'Webhook enviado.', 
                 'final_message': final_message_to_return,
-                'image_url': produto_para_salvar.get('processed_image_url') or original_image_url,
+                'image_url': produto_para_salvar.get('processed_image_url') or produto_para_salvar.get('imagem'),
                 'webhook_status': response.status_code
             })
         else:
@@ -353,14 +445,15 @@ def processar_produto_webhook():
             )
             
             # Processar imagem se disponível
-            original_image_url = produto_dados.get('imagem')
-            if original_image_url:
-                try:
-                    image_bytes = services.processar_imagem_para_quadrado(original_image_url)
-                    if image_bytes:
-                        produto_dados['processed_image_url'] = services.upload_imagem_processada(image_bytes)
-                except Exception as e:
-                    print(f"Erro ao processar imagem: {e}")
+            # Comentado: Não processar imagem automaticamente na fila
+            # original_image_url = produto_dados.get('imagem')
+            # if original_image_url:
+            #     try:
+            #         image_bytes = services.processar_imagem_para_quadrado(original_image_url)
+            #         if image_bytes:
+            #             produto_dados['processed_image_url'] = services.upload_imagem_processada(image_bytes)
+            #     except Exception as e:
+            #         print(f"Erro ao processar imagem: {e}")
             
             # Usar webhook para gerar mensagem ao invés de geração local
             try:
@@ -389,7 +482,7 @@ def processar_produto_webhook():
                 'message': 'Produto processado e webhook enviado com sucesso!',
                 'produto': produto_dados,
                 'final_message': final_message_to_return,
-                'image_url': produto_dados.get('processed_image_url') or original_image_url,
+                'image_url': produto_dados.get('processed_image_url') or produto_dados.get('imagem'),
                 'webhook_status': webhook_response.status_code,
                 'platform': platform,
                 'response_time': round(response_time, 2)

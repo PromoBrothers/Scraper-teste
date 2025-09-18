@@ -40,7 +40,8 @@
       "Read(/C:\\Users\\Joao_\\OneDrive\\Documentos\\GitHub\\TESTE\\Scraper_Promo-2.0\\app\\templates/**)",
       "Bash(curl:*)",
       "Bash(del test_bucket.py)",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

@@ -258,7 +258,25 @@ def scrape_produto_amazon_especifico(url, afiliado_link=None):
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         produto = {'link': url}
-        produto['nome'] = soup.select_one('#productTitle').get_text().strip()
+
+        # Extrair título do produto com verificação de segurança
+        title_elem = soup.select_one('#productTitle')
+        if title_elem:
+            produto['nome'] = title_elem.get_text().strip()
+        else:
+            # Fallback: tentar outros seletores de título
+            fallback_selectors = [
+                'h1#title',
+                'h1[id*="title"]',
+                '.product-title',
+                'h1'
+            ]
+            produto['nome'] = 'Produto Amazon'
+            for selector in fallback_selectors:
+                fallback_elem = soup.select_one(selector)
+                if fallback_elem and fallback_elem.get_text().strip():
+                    produto['nome'] = fallback_elem.get_text().strip()
+                    break
         img_tag = soup.select_one('#landingImage')
         if img_tag and img_tag.has_attr('data-a-dynamic-image'):
             img_json = json.loads(img_tag['data-a-dynamic-image'])
@@ -278,8 +296,12 @@ def scrape_produto_amazon_especifico(url, afiliado_link=None):
         for selector in preco_atual_selectors:
             preco_atual_elem = soup.select_one(selector)
             if preco_atual_elem:
-                produto['preco_atual'] = sanitize_amazon_price(preco_atual_elem.get_text().strip())
-                break
+                try:
+                    produto['preco_atual'] = sanitize_amazon_price(preco_atual_elem.get_text().strip())
+                    break
+                except Exception as e:
+                    print(f"Erro ao extrair preço atual com seletor {selector}: {e}")
+                    continue
         
         # Múltiplos seletores para preço original
         preco_original_selectors = [
@@ -295,8 +317,12 @@ def scrape_produto_amazon_especifico(url, afiliado_link=None):
         for selector in preco_original_selectors:
             preco_original_elem = soup.select_one(selector)
             if preco_original_elem:
-                produto['preco_original'] = sanitize_amazon_price(preco_original_elem.get_text().strip())
-                break
+                try:
+                    produto['preco_original'] = sanitize_amazon_price(preco_original_elem.get_text().strip())
+                    break
+                except Exception as e:
+                    print(f"Erro ao extrair preço original com seletor {selector}: {e}")
+                    continue
         
         # Procurar desconto direto na página do produto
         desconto = None

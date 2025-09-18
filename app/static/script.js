@@ -548,6 +548,84 @@ function isValidImageUrl(url) {
   }
 }
 
+window.handleImageUpload = async function(fileInput) {
+  const file = fileInput.files[0];
+  if (!file) return;
+
+  // Validar tipo de arquivo
+  if (!file.type.startsWith('image/')) {
+    showAlert('Por favor, selecione apenas arquivos de imagem.', 'error');
+    return;
+  }
+
+  // Validar tamanho (máximo 10MB)
+  if (file.size > 10 * 1024 * 1024) {
+    showAlert('A imagem deve ter no máximo 10MB.', 'error');
+    return;
+  }
+
+  // Mostrar loading
+  const uploadBtn = document.querySelector('button[onclick*="editarImagemFile"]');
+  const originalText = uploadBtn.innerHTML;
+  uploadBtn.innerHTML = '⏳ Fazendo upload...';
+  uploadBtn.disabled = true;
+
+  try {
+    // Obter dados do produto para usar o título como nome do arquivo
+    const produtoId = document.getElementById('editarProdutoId').value;
+    if (!produtoId) {
+      throw new Error('ID do produto não encontrado');
+    }
+
+    // Buscar dados do produto
+    const produtoResponse = await fetch(`/produtos/${produtoId}`);
+    const produtoData = await produtoResponse.json();
+
+    if (!produtoData.success) {
+      throw new Error('Erro ao obter dados do produto');
+    }
+
+    const titulo = produtoData.produto.titulo || 'produto';
+
+    // Criar FormData
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('titulo', titulo);
+    formData.append('produto_id', produtoId);
+
+    // Fazer upload
+    const response = await fetch('/upload_product_image', {
+      method: 'POST',
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      // Atualizar o campo de URL da imagem
+      document.getElementById('editarImagemUrl').value = data.image_url;
+
+      // Atualizar o preview
+      updateImagePreview();
+
+      showAlert('Imagem enviada com sucesso! 🎉', 'success');
+    } else {
+      throw new Error(data.error || 'Erro no upload da imagem');
+    }
+
+  } catch (error) {
+    console.error('Erro no upload:', error);
+    showAlert(`Erro no upload: ${error.message}`, 'error');
+  } finally {
+    // Restaurar botão
+    uploadBtn.innerHTML = originalText;
+    uploadBtn.disabled = false;
+
+    // Limpar input
+    fileInput.value = '';
+  }
+};
+
 window.deletarAgendamento = async function (produtoId, buttonElement) {
   if (!confirm("Tem certeza que deseja excluir este produto?")) {
     return;
@@ -1249,7 +1327,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 loading.querySelector("p").textContent = `Processando Amazon ${i + 1} de ${amazonProductQueue.length}...`;
 
                 try {
-                    const response = await fetch('/webhook/processar', {
+                    const response = await fetch('/webhook/processar-amazon', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -1285,7 +1363,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
         atualizarFilaVisualAmazon();
     }
-  
+
+    // Handler para analisar produto individual da Amazon usando webhook
+    const amazonLinkForm = document.getElementById('amazonLinkForm');
+    if (amazonLinkForm) {
+        amazonLinkForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const loading = document.getElementById('loading');
+            const webhookMessageSection = document.getElementById('webhookMessageSection');
+            const webhookMessageContent = document.getElementById('webhookMessageContent');
+
+            const urlInput = document.getElementById('amazonProdutoUrlSingle');
+            if (!urlInput) return;
+
+            const url = urlInput.value.trim();
+            if (!url) {
+                showAlert('Por favor, insira o link do produto da Amazon', 'error');
+                return;
+            }
+
+            if (!url.includes('amazon.com') && !url.includes('amzn.to')) {
+                showAlert('Por favor, insira um link válido da Amazon', 'error');
+                return;
+            }
+
+            // Pedir link de afiliado
+            const afiliadoLink = prompt('Link de afiliado (opcional):') || '';
+
+            loading.style.display = 'block';
+            loading.querySelector('p').textContent = 'Processando produto da Amazon...';
+
+            // Limpar seção de resultados anterior
+            if (webhookMessageContent) {
+                webhookMessageContent.innerHTML = '';
+            }
+            if (webhookMessageSection) {
+                webhookMessageSection.style.display = 'block';
+            }
+
+            try {
+                const response = await fetch('/webhook/processar-amazon', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url_produto: url,
+                        afiliado_link: afiliadoLink
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('Produto da Amazon processado com sucesso!', 'success');
+                    displayWebhookResponse(data.final_message, 'success', data.image_url);
+
+                    // Limpar formulário
+                    urlInput.value = '';
+                } else {
+                    throw new Error(data.error || 'Erro ao processar produto da Amazon');
+                }
+
+            } catch (error) {
+                console.error('Erro ao processar produto da Amazon:', error);
+                showAlert(`Erro: ${error.message}`, 'error');
+                displayWebhookResponse(`Erro ao processar produto: ${error.message}`, 'error');
+            } finally {
+                loading.style.display = 'none';
+            }
+        });
+    }
+
   const filtroStatus = document.getElementById("filtroStatus");
   const filtroOrdem = document.getElementById("filtroOrdem");
 
